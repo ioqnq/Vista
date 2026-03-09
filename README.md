@@ -4,7 +4,7 @@ book your next stay with Vista
 ## 🪪 User Stories
 
 As a traveler, I want to:
-- view detailed information about each accommodation, so that I can compare options based on price, location, facilities, reviews, and nearby attractions
+- view detailed information about each accommodation, so that I can compare options based on price, location, facilities, and reviews
 - book an accommodation for specific dates, so that I can reserve a place to stay during my trip.
 
 As a host, I want to:
