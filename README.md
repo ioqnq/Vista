@@ -1,5 +1,5 @@
 # 🗺 Vista
-book your next stay with Vista
+Find your dream accomodation with Vista. Filter lodgings based on various attributes such as number of rooms, bathrooms, proximity to city center and more!
 
 ## 🪪 User Stories
 
