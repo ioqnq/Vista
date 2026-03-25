@@ -11,6 +11,10 @@ As a host, I want to:
 - create accommodation listings with photos, descriptions, and prices, so that travelers can discover and book my property
 - manage bookings and update availability for my accommodation, so that I can control when my property can be reserved.
 
+### Prototypes
+
+View our Figma wireframe [here](https://www.figma.com/design/A6hak3NXUCc83hufeiAt9t/Vista-wireframe?node-id=0-1&t=AOhZlpNRihYndEhR-1)!
+
 ## 👤 Authors
 | <img src="https://avatars.githubusercontent.com/u/114288029?v=4" width="100"> | <img src="https://avatars.githubusercontent.com/u/183308975?v=4" width="100"> | <img src="https://avatars.githubusercontent.com/u/182642157?v=4" width="100">  |
 | ------------- | ------------- | ------------- |
