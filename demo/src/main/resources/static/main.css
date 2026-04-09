@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+:root {
+    --green: #84c44f;
+    --green-dark: #6fa53f;
+    --green-soft: #a7d86f;
+    --bg: #f3f3f3;
+    --card: #ffffff;
+    --text: #222;
+    --muted: #8d8d8d;
+    --border: #d8d8d8;
+    --shadow: 0 2px 8px rgba(0,0,0,.12);
+    --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Readex Pro', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+a { color: inherit; text-decoration: none; }
+
+.site {
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 86px;
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 34px;
+}
+
+.topbar-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.brand {
+    font-family: 'Courgette', cursive;
+    font-size: 55px;
+    line-height: 1;
+    color: #fff;
+    margin-right: 32px;
+}
+
+.nav-wrap,
+.nav,
+.nav-right,
+.inline{
+    display: flex;
+    align-items: center;
+}
+.nav-wrap { gap: 20px; }
+.nav { gap: 8px; }
+.nav a {
+    padding: 17px 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 18px;
+}
+.nav a.active {
+    background: rgba(255,255,255,.14);
+}
+.nav-right { gap: 12px; }
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.mini-pill, .btn, .icon-btn {
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.mini-pill {
+    background: rgba(255,255,255,.15);
+    color: #1d2e09;
+    border: 1px solid #567d2f;
+    height: 32px;
+    padding: 0 18px;
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 12px;
+    font-weight: 700;
+    font-size: 13px;
+}
+.user-chip img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}

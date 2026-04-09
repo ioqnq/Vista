@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header th:fragment="topbar" class="topbar">
+  <link rel="stylesheet" th:href="@{/main.css}">
+    <div class="nav-wrap">
+      <div class="brand">Vista</div>
+      <nav class="nav">
+        <a href="#">
+          <img th:src="@{/assets/icons/stays.svg}" alt="Stays" class="nav-icon" /> Stays
+        </a>
+        <a href="#">
+          <img th:src="@{/assets/icons/transport.svg}" alt="Transport" class="nav-icon" /> Transport
+        </a>
+        <a href="#">
+          <img th:src="@{/assets/icons/attractions.svg}" alt="Attractions" class="nav-icon" /> Attractions
+        </a>
+        <a href="#">
+          <img th:src="@{/assets/icons/eats.svg}" alt="Eats" class="nav-icon" /> Eats
+        </a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="mini-pill">Bookings</button>
+      <button class="mini-pill">Properties</button>
+      <div class="user-chip"><img src="assets/defaultpfp.png" alt="avatar" /><span>User<br />Name</span></div>
+    </div>
+</header>
+
+</body>
+</html>
