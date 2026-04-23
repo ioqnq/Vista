@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home Page</title>
+</head>
+
+<body>
+    <div class="site">
+
+        <div th:replace="~{fragments/header :: topbar}"></div>
+
+        <main>
+            <h1 th:text="${message}">Welcome!</h1>
+        </main>
+
+    </div>
+</body>
+</html>
