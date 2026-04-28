@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Booking Details</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="form-layout">
+    <div class="form-card">
+      <h2>Booking details</h2>
+
+      <form th:action="@{/booking-details}" th:object="${bookingForm}" method="post">
+        <input type="hidden" th:field="*{propertyId}">
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label>First name</label>
+            <input type="text" th:field="*{firstName}" placeholder="Corina">
+          </div>
+
+          <div class="field-group">
+            <label>Last name</label>
+            <input type="text" th:field="*{lastName}" placeholder="Popescu">
+          </div>
+
+          <div class="field-group">
+            <label>Email</label>
+            <input type="email" th:field="*{email}" placeholder="corina@email.com">
+          </div>
+
+          <div class="field-group">
+            <label>Phone</label>
+            <input type="text" th:field="*{phone}" placeholder="+40 700 000 000">
+          </div>
+
+          <div class="field-group">
+            <label>Check-in</label>
+            <input type="text" th:field="*{checkIn}" placeholder="12 Sept 2026">
+          </div>
+
+          <div class="field-group">
+            <label>Check-out</label>
+            <input type="text" th:field="*{checkOut}" placeholder="17 Sept 2026">
+          </div>
+
+          <div class="field-group">
+            <label>Guests</label>
+            <input type="number" th:field="*{guests}" min="1" placeholder="4">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-btn">Continue to payment</button>
+      </form>
+    </div>
+
+    <aside class="booking-summary-card">
+      <h3 th:text="${property.name}">Authentic Villa Romana</h3>
+
+      <div class="summary-row">
+        <span>Check-in</span>
+        <span th:text="${bookingForm.checkIn}">12 Sept 2026</span>
+      </div>
+      <div class="summary-row">
+        <span>Check-out</span>
+        <span th:text="${bookingForm.checkOut}">17 Sept 2026</span>
+      </div>
+      <div class="summary-row">
+        <span>Guests</span>
+        <span th:text="${bookingForm.guests}">4</span>
+      </div>
+      <div class="summary-row">
+        <span>Total</span>
+        <strong th:text="'$' + ${property.pricePerNight * 5}">$2500</strong>
+      </div>
+    </aside>
+  </section>
+</main>
+
+</body>
+</html>

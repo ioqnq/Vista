@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Guest Bookings</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="list-card">
+    <div class="section-head">
+      <h2>My bookings</h2>
+    </div>
+
+    <div class="booking-list">
+      <article class="booking-item" th:each="booking : ${bookings}">
+        <div>
+          <h3 th:text="${booking.propertyName}">Booking name</h3>
+          <p class="muted-text">
+            <span th:text="${booking.checkIn}">12 Sept 2026</span>
+            -
+            <span th:text="${booking.checkOut}">17 Sept 2026</span>
+          </p>
+        </div>
+
+        <div class="booking-meta">
+          <span class="status-badge" th:text="${booking.status}">Confirmed</span>
+          <strong th:text="'$' + ${booking.totalPrice}">$2500</strong>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
