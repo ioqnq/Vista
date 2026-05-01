@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Details</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="details-layout">
+    <div class="details-main">
+      <img class="details-hero" th:src="${property.imageUrl}" alt="Property image">
+
+      <div class="details-card">
+        <h1 th:text="${property.name}">Authentic Villa Romana</h1>
+        <p class="muted-text" th:text="${property.location}">Rome, Italy</p>
+        <p class="rating-line">★ <span th:text="${property.rating}">4.8</span></p>
+        <p class="details-description" th:text="${property.description}">
+          Property description
+        </p>
+
+        <div class="detail-tags">
+          <span class="detail-chip">Wi-Fi</span>
+          <span class="detail-chip">Parking</span>
+          <span class="detail-chip">Breakfast included</span>
+          <span class="detail-chip">Near attractions</span>
+        </div>
+      </div>
+
+      <div class="details-card">
+        <h3>Reviews</h3>
+
+        <div class="review-card">
+          <strong>Anna</strong>
+          <p>Beautiful place, great location and very clean.</p>
+        </div>
+
+        <div class="review-card">
+          <strong>David</strong>
+          <p>Spacious villa and very good facilities for families.</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="booking-summary-card">
+      <h3>Booking summary</h3>
+      <p class="big-price" th:text="'$' + ${property.pricePerNight} + ' / night'">$500 / night</p>
+
+      <div class="summary-row">
+        <span>Check-in</span>
+        <span>12 Sept</span>
+      </div>
+      <div class="summary-row">
+        <span>Check-out</span>
+        <span>17 Sept</span>
+      </div>
+      <div class="summary-row">
+        <span>Guests</span>
+        <span>4 adults</span>
+      </div>
+
+      <a th:href="@{/booking-details/{id}(id=${property.id})}" class="btn btn-primary full-btn">Book now</a>
+    </aside>
+  </section>
+</main>
+
+</body>
+</html>
