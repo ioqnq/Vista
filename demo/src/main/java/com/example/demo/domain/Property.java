@@ -1,18 +1,55 @@
 package com.example.demo.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "properties")
 public class Property {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String location;
+
+    @Column(nullable = false)
     private double pricePerNight;
+
+    @Column(nullable = false)
     private double rating;
+
+    @Column(nullable = false)
     private String imageUrl;
+
+    @Column(nullable = false)
     private int maxGuests;
+
+    @Column(nullable = false)
     private String propertyType;
+
+    @Column(nullable = false)
     private boolean breakfastIncluded;
+
+    @Column(nullable = false)
     private boolean allowsPets;
+
+    @Column(nullable = false)
     private boolean parkingSpace;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(nullable = false)
+    private String hostEmail;
 
     public Property() {
     }
@@ -20,7 +57,7 @@ public class Property {
     public Property(Long id, String name, String location, double pricePerNight, double rating,
                     String imageUrl, int maxGuests, String propertyType,
                     boolean breakfastIncluded, boolean allowsPets, boolean parkingSpace,
-                    String description) {
+                    String description, String hostEmail) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -33,6 +70,25 @@ public class Property {
         this.allowsPets = allowsPets;
         this.parkingSpace = parkingSpace;
         this.description = description;
+        this.hostEmail = hostEmail;
+    }
+
+    public Property(String name, String location, double pricePerNight, double rating,
+                    String imageUrl, int maxGuests, String propertyType,
+                    boolean breakfastIncluded, boolean allowsPets, boolean parkingSpace,
+                    String description, String hostEmail) {
+        this.name = name;
+        this.location = location;
+        this.pricePerNight = pricePerNight;
+        this.rating = rating;
+        this.imageUrl = imageUrl;
+        this.maxGuests = maxGuests;
+        this.propertyType = propertyType;
+        this.breakfastIncluded = breakfastIncluded;
+        this.allowsPets = allowsPets;
+        this.parkingSpace = parkingSpace;
+        this.description = description;
+        this.hostEmail = hostEmail;
     }
 
     public Long getId() { return id; }
@@ -47,6 +103,7 @@ public class Property {
     public boolean isAllowsPets() { return allowsPets; }
     public boolean isParkingSpace() { return parkingSpace; }
     public String getDescription() { return description; }
+    public String getHostEmail() { return hostEmail; }
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
@@ -60,4 +117,5 @@ public class Property {
     public void setAllowsPets(boolean allowsPets) { this.allowsPets = allowsPets; }
     public void setParkingSpace(boolean parkingSpace) { this.parkingSpace = parkingSpace; }
     public void setDescription(String description) { this.description = description; }
+    public void setHostEmail(String hostEmail) { this.hostEmail = hostEmail; }
 }

@@ -7,21 +7,29 @@ import org.springframework.stereotype.Service;
 import com.example.demo.domain.Booking;
 import com.example.demo.domain.BookingForm;
 import com.example.demo.domain.Property;
-import com.example.demo.repository.BookingMockRepository;
+import com.example.demo.repository.BookingRepository;
 
 @Service
 public class BookingService {
 
-    private final BookingMockRepository bookingRepository;
+    private final BookingRepository bookingRepository;
     private final PropertyService propertyService;
 
-    public BookingService(BookingMockRepository bookingRepository, PropertyService propertyService) {
+    public BookingService(BookingRepository bookingRepository, PropertyService propertyService) {
         this.bookingRepository = bookingRepository;
         this.propertyService = propertyService;
     }
 
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
+    }
+
+    public List<Booking> getBookingsForProperty(Long propertyId) {
+        return bookingRepository.findByPropertyId(propertyId);
+    }
+
+    public List<Booking> getBookingsForUser(String email) {
+        return bookingRepository.findByEmail(email);
     }
 
     public Booking createBooking(BookingForm form) {
@@ -31,7 +39,7 @@ public class BookingService {
             throw new IllegalArgumentException("Property not found");
         }
 
-        double totalPrice = property.getPricePerNight() * 5; // mock total
+        double totalPrice = property.getPricePerNight() * 5;
 
         Booking booking = new Booking();
         booking.setPropertyId(property.getId());

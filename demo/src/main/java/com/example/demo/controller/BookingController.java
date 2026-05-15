@@ -46,6 +46,32 @@ public class BookingController {
     @PostMapping("/booking-details")
     public String submitBooking(@ModelAttribute BookingForm bookingForm) {
         bookingService.createBooking(bookingForm);
-        return "redirect:/guest-bookings";
+        return "redirect:/payment/" + bookingForm.getPropertyId();
+    }
+
+    @GetMapping("/payment/{propertyId}")
+    public String paymentPage(@PathVariable Long propertyId, Model model) {
+        Property property = propertyService.getPropertyById(propertyId);
+
+        if (property == null) {
+            return "redirect:/results";
+        }
+
+        model.addAttribute("property", property);
+        model.addAttribute("total", property.getPricePerNight() * 5);
+
+        return "payment";
+    }
+
+    @GetMapping("/guest-bookings")
+    public String guestBookings(Model model) {
+        model.addAttribute("bookings", bookingService.getAllBookings());
+        return "guest-bookings";
+    }
+
+    @GetMapping("/host-properties")
+    public String hostProperties(Model model) {
+        model.addAttribute("properties", propertyService.getAllProperties());
+        return "host-properties";
     }
 }

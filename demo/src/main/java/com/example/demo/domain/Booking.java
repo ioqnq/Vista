@@ -1,17 +1,51 @@
 package com.example.demo.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "bookings")
 public class Booking {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private Long propertyId;
+
+    @Column(nullable = false)
     private String propertyName;
+
+    @Column(nullable = false)
     private String guestFirstName;
+
+    @Column(nullable = false)
     private String guestLastName;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private String checkIn;
+
+    @Column(nullable = false)
     private String checkOut;
+
+    @Column(nullable = false)
     private int guests;
+
+    @Column(nullable = false)
     private double totalPrice;
+
+    @Column(nullable = false)
     private String status;
 
     public Booking() {

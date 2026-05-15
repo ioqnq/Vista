@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Host Property Details</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="details-layout">
+    <div class="details-main">
+      <img class="details-hero" th:src="${property.imageUrl}" alt="Property image">
+
+      <div class="details-card">
+        <h1 th:text="${property.name}">Property</h1>
+        <p class="muted-text" th:text="${property.location}">Rome</p>
+        <p class="rating-line">★ <span th:text="${property.rating}">4.8</span></p>
+        <p class="details-description" th:text="${property.description}">Description</p>
+      </div>
+
+      <div class="details-card">
+        <h3>Booked dates</h3>
+        <p>Here you will later display all bookings for this property.</p>
+      </div>
+    </div>
+
+    <aside class="booking-summary-card">
+      <h3>Property summary</h3>
+
+      <div class="summary-row">
+        <span>Price</span>
+        <span th:text="'$' + ${property.pricePerNight} + ' / night'">$500 / night</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Max guests</span>
+        <span th:text="${property.maxGuests}">4</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Type</span>
+        <span th:text="${property.propertyType}">Villa</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Breakfast</span>
+        <span th:text="${property.breakfastIncluded ? 'Included' : 'Not included'}">Included</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Pets</span>
+        <span th:text="${property.allowsPets ? 'Allowed' : 'Not allowed'}">Allowed</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Parking</span>
+        <span th:text="${property.parkingSpace ? 'Yes' : 'No'}">Yes</span>
+      </div>
+    </aside>
+  </section>
+</main>
+
+</body>
+</html>

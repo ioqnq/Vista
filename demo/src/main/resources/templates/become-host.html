@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Become Host</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="list-card">
+    <div class="section-head">
+      <h2>Become a host</h2>
+    </div>
+
+    <div class="booking-list">
+      <article class="booking-item">
+        <div>
+          <h3>Host access required</h3>
+          <p class="muted-text">
+            You need a host account to access the Properties area and manage your listings.
+          </p>
+        </div>
+      </article>
+
+      <article class="booking-item">
+        <div>
+          <h3>What hosts can do</h3>
+          <p class="muted-text">
+            View their own properties, check booking periods, and manage listing details.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+      <a th:href="@{/profile}" class="btn btn-primary">Go to profile</a>
+      <a th:href="@{/results}" class="btn btn-primary">Back to stays</a>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

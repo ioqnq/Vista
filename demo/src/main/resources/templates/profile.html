@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Profile</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="list-card">
+    <div class="section-head">
+      <h2>My profile</h2>
+    </div>
+
+    <div class="booking-list">
+      <article class="booking-item">
+        <div>
+          <h3>First name</h3>
+          <p class="muted-text" th:text="${user.firstName}">Corina</p>
+        </div>
+      </article>
+
+      <article class="booking-item">
+        <div>
+          <h3>Last name</h3>
+          <p class="muted-text" th:text="${user.lastName}">Mihon</p>
+        </div>
+      </article>
+
+      <article class="booking-item">
+        <div>
+          <h3>Email</h3>
+          <p class="muted-text" th:text="${user.email}">corina@example.com</p>
+        </div>
+      </article>
+
+      <article class="booking-item">
+        <div>
+          <h3>Role</h3>
+          <p class="muted-text" th:text="${user.role}">GUEST</p>
+        </div>
+      </article>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <form th:action="@{/logout}" method="post">
+        <button class="btn btn-primary" type="submit">Logout</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
