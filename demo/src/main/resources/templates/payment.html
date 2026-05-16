@@ -15,45 +15,41 @@
     <div class="form-card">
       <h2>Payment</h2>
 
-      <form th:action="@{/payment}" method="post">
-        <input type="hidden" name="bookingId" th:value="${booking.id}">
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" checked>
+          <span>Credit card</span>
+        </label>
 
-        <div class="payment-options">
-          <label class="payment-option">
-            <input type="radio" name="paymentMethod" value="CARD" checked>
-            <span>Credit card</span>
-          </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod">
+          <span>PayPal</span>
+        </label>
+      </div>
 
-          <label class="payment-option">
-            <input type="radio" name="paymentMethod" value="PAYPAL">
-            <span>PayPal</span>
-          </label>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>Card holder name</label>
+          <input type="text" placeholder="Corina Popescu">
         </div>
 
-        <div class="form-grid">
-          <div class="field-group">
-            <label>Card holder name</label>
-            <input type="text" name="cardHolderName" placeholder="Corina Popescu">
-          </div>
-
-          <div class="field-group">
-            <label>Card number</label>
-            <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456">
-          </div>
-
-          <div class="field-group">
-            <label>Expiry date</label>
-            <input type="text" name="expiryDate" placeholder="MM/YY">
-          </div>
-
-          <div class="field-group">
-            <label>CVV</label>
-            <input type="text" name="cvv" placeholder="123">
-          </div>
+        <div class="field-group">
+          <label>Card number</label>
+          <input type="text" placeholder="1234 5678 9012 3456">
         </div>
 
-        <button class="btn btn-primary full-btn" type="submit">Pay now</button>
-      </form>
+        <div class="field-group">
+          <label>Expiry date</label>
+          <input type="text" placeholder="MM/YY">
+        </div>
+
+        <div class="field-group">
+          <label>CVV</label>
+          <input type="text" placeholder="123">
+        </div>
+      </div>
+
+      <a th:href="@{/guest-bookings}" class="btn btn-primary full-btn">Pay now</a>
     </div>
 
     <aside class="booking-summary-card">
@@ -61,27 +57,22 @@
 
       <div class="summary-row">
         <span>Property</span>
-        <span th:text="${booking.propertyName}">Authentic Villa Romana</span>
+        <span th:text="${property.name}">Authentic Villa Romana</span>
       </div>
 
       <div class="summary-row">
-        <span>Check-in</span>
-        <span th:text="${booking.checkIn}">12 Sept 2026</span>
+        <span>Location</span>
+        <span th:text="${property.location}">Rome</span>
       </div>
 
       <div class="summary-row">
-        <span>Check-out</span>
-        <span th:text="${booking.checkOut}">17 Sept 2026</span>
-      </div>
-
-      <div class="summary-row">
-        <span>Guests</span>
-        <span th:text="${booking.guests}">4</span>
+        <span>Price per night</span>
+        <span th:text="'$' + ${property.pricePerNight}">$500</span>
       </div>
 
       <div class="summary-row">
         <span>Total</span>
-        <strong th:text="'$' + ${booking.totalPrice}">$2500</strong>
+        <strong th:text="'$' + ${total}">$2500</strong>
       </div>
     </aside>
   </section>

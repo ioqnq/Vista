@@ -18,12 +18,15 @@
     </div>
 
     <div class="list-grid">
-      <article class="host-card" th:each="property : ${hostProperties}">
-        <img th:src="@{${property.image}}" alt="Property image">
+      <article class="host-card" th:each="property : ${properties}">
+        <img th:src="${property.imageUrl}" alt="Property image">
+
         <div class="host-card-body">
           <h3 th:text="${property.name}">Property name</h3>
-          <p th:text="${property.price}">$500/night</p>
-          <span class="status-badge" th:text="${property.status}">Available</span>
+          <p th:text="${property.location}">Rome</p>
+          <p th:text="'$' + ${property.pricePerNight} + ' / night'">$500/night</p>
+
+          <a th:href="@{/host/properties/{id}(id=${property.id})}" class="btn btn-small btn-primary">View details</a>
         </div>
       </article>
     </div>
