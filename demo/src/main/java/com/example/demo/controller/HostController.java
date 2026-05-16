@@ -10,6 +10,13 @@ import com.example.demo.domain.User;
 import com.example.demo.service.PropertyService;
 import com.example.demo.service.UserService;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
+import com.example.demo.dto.PropertyForm;
+
 @Controller
 public class HostController {
 
@@ -75,5 +82,38 @@ public class HostController {
 
         model.addAttribute("property", property);
         return "host-property-details";
+    }
+
+    @GetMapping("/properties/add")
+    public String showAddPropertyForm(Authentication authentication, Model model) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findByEmail(authentication.getName());
+        if (user == null || !"HOST".equalsIgnoreCase(user.getRole())) {
+            return "redirect:/properties";
+        }
+
+        model.addAttribute("propertyForm", new PropertyForm());
+        return "propertyForm";
+    }
+
+    @PostMapping("/properties/add")
+    public String processAddProperty(
+            @ModelAttribute("propertyForm") PropertyForm form,
+            @RequestParam("images") List<MultipartFile> images,
+            Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findByEmail(authentication.getName());
+        if (user == null || !"HOST".equalsIgnoreCase(user.getRole())) {
+            return "redirect:/properties";
+        }
+
+        propertyService.saveProperty(form, images, user.getEmail());
+
+        return "redirect:/properties";
     }
 }
