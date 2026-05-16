@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista - Add New Property</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+    <section class="list-card">
+        <div class="section-head">
+            <h2>Add a New Property</h2>
+        </div>
+
+        <!-- enctype="multipart/form-data" is required for image uploads !!! -->
+        <form th:action="@{/properties/add}" th:object="${propertyForm}" method="post" enctype="multipart/form-data" class="booking-list">
+
+            <article class="booking-item">
+                <div>
+                    <h3>Property Name</h3>
+                    <input type="text" th:field="*{name}" placeholder="e.g., Cozy Beachfront Apartment" required class="form-control">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Location</h3>
+                    <input type="text" th:field="*{location}" placeholder="e.g., Brasov, Romania" required class="form-control">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Price per Night ($)</h3>
+                    <input type="number" step="0.01" th:field="*{pricePerNight}" placeholder="e.g., 99.99" required class="form-control">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Maximum Guests</h3>
+                    <input type="number" th:field="*{maxGuests}" min="1" placeholder="e.g., 4" required class="form-control">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Property Type</h3>
+                    <select th:field="*{propertyType}" class="form-control" required>
+                        <option value="" disabled selected>Select a type...</option>
+                        <option value="APARTMENT">Apartment</option>
+                        <option value="HOUSE">House</option>
+                        <option value="VILLA">Villa</option>
+                        <option value="CABIN">Cabin</option>
+                    </select>
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Description</h3>
+                    <textarea th:field="*{description}" placeholder="Describe your property details, amenities, and surroundings..." rows="4" required class="form-control" style="width: 100%; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Property Images</h3>
+                    <p class="muted-text" style="margin-bottom: 8px;">Upload one or more photos of your property.</p>
+                    <input type="file" name="images" accept="image/*" multiple required class="form-control-file">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Amenities & Rules</h3>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" th:field="*{breakfastIncluded}" style="transform: scale(1.2);">
+                            <span>Breakfast Included</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" th:field="*{allowsPets}" style="transform: scale(1.2);">
+                            <span>Allow Pets</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" th:field="*{parkingSpace}" style="transform: scale(1.2);">
+                            <span>Parking Space Available</span>
+                        </label>
+                    </div>
+                </div>
+            </article>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                <button class="btn btn-primary" type="submit">Save Property</button>
+                <a th:href="@{/properties}" class="muted-text" style="align-self: center; text-decoration: none;">Cancel</a>
+            </div>
+
+        </form>
+    </section>
+</main>
+
+</body>
+</html>
