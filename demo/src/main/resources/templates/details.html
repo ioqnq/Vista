@@ -72,13 +72,15 @@
     </div>
   </section>
 
-  <section class="details-card accordion-card">
-    <div class="accordion-header">
-      <strong>Description</strong>
-      <span>&#708;</span> </div>
-    <p class="details-description" th:text="${property.description}">
-      Authentic Villa Romana is located in Rome, just a 18-minute walk from San Giovanni Metro Station...
-    </p>
+  <section class="details-card">
+    <h3>Description</h3>
+
+    <div class="description-container">
+      <p class="details-description" th:text="${property.description}">
+      </p>
+    </div>
+
+    <button class="see-more-btn">See more</button>
   </section>
 
   <section class="details-card">
@@ -127,5 +129,26 @@
   </section>
 
 </main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const container = document.querySelector('.description-container');
+    const btn = document.querySelector('.see-more-btn');
+
+    if (container && btn) {
+      btn.addEventListener('click', function() {
+        // toggle the expanded class on the container
+        container.classList.toggle('expanded');
+
+        // change the button text based on the state
+        if (container.classList.contains('expanded')) {
+          btn.textContent = 'See less';
+        } else {
+          btn.textContent = 'See more';
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>
