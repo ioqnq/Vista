@@ -1,0 +1,177 @@
+/* --- Main Layout --- */
+.details-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: flex-start; /* prevents sidebar from stretching vertically to match main content */
+}
+
+.details-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 3 1 600px; /* takes most of the space, wraps on mobile */
+}
+
+.details-hero {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* --- Content Cards --- */
+.details-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+}
+
+.details-card h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.details-card h3 {
+    margin: 0 0 20px;
+    font-size: 24px;
+}
+
+.details-description {
+    line-height: 1.7;
+    color: #444;
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+/* --- Feature Tags --- */
+.detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.detail-chip {
+    background: rgba(132, 196, 79, 0.15); /* soft transparent green */
+    color: var(--green-dark);
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+/* --- Reviews --- */
+.reviews-grid {
+    display: grid;
+    /* automatically fits as many 260px cards as possible */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.review-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-stars {
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--text);
+}
+
+.review-card h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.review-card p {
+    margin: 0;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    flex-grow: 1; /* pushes the user info down so avatars align at the bottom */
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.reviewer-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reviewer-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-details strong {
+    font-size: 14px;
+}
+
+.reviewer-details .review-date {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* --- Booking Sidebar --- */
+.booking-summary-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+    flex: 1 1 320px; /* squishes down on smaller screens */
+    position: sticky;
+    top: 24px;
+}
+
+.booking-summary-card h3 {
+    margin: 0 0 16px;
+    font-size: 20px;
+}
+
+.big-price {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 24px;
+    color: var(--text);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+}
+
+.summary-row:last-of-type {
+    border-bottom: none;
+    margin-bottom: 24px;
+}
+
+.summary-row span:first-child {
+    font-weight: 600;
+    color: #444;
+}
+
+.full-btn {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+}

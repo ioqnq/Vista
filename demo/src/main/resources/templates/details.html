@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vista - Details</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <link rel="stylesheet" th:href="@{/details.css}">
 </head>
 <body>
 
@@ -32,16 +33,44 @@
       </div>
 
       <div class="details-card">
-        <h3>Reviews</h3>
+        <h3>Latest reviews</h3>
 
-        <div class="review-card">
-          <strong>Anna</strong>
-          <p>Beautiful place, great location and very clean.</p>
-        </div>
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div class="review-stars">☆☆☆☆☆</div>
+            <h4>Review title</h4>
+            <p>Beautiful place, great location and very clean.</p>
+            <div class="reviewer-info">
+              <img src="" alt="Reviewer">
+              <div class="reviewer-details">
+                <strong>Reviewer name</strong>
+                <span class="review-date">Date</span> </div>
+            </div>
+          </div>
 
-        <div class="review-card">
-          <strong>David</strong>
-          <p>Spacious villa and very good facilities for families.</p>
+          <div class="review-card">
+            <div class="review-stars">☆☆☆☆☆</div>
+            <h4>Review title</h4>
+            <p>Spacious villa and very good facilities for families.</p>
+            <div class="reviewer-info">
+              <img src="" alt="Reviewer">
+              <div class="reviewer-details">
+                <strong>Reviewer name</strong>
+                <span class="review-date">Date</span> </div>
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-stars">☆☆☆☆☆</div>
+            <h4>Review title</h4>
+            <p>Incredible host and seamless check-in process.</p>
+            <div class="reviewer-info">
+              <img src="" alt="Reviewer">
+              <div class="reviewer-details">
+                <strong>Reviewer name</strong>
+                <span class="review-date">Date</span> </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
