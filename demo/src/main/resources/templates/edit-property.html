@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Edit Property</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="host-page">
+    <div class="host-list-card" style="max-width: 900px; margin: 0 auto;">
+      <div class="host-section-head">
+        <h2>Edit property</h2>
+      </div>
+
+      <form th:action="@{/host/properties/edit/{id}(id=${property.id})}"
+            th:object="${property}"
+            method="post"
+            class="booking-list">
+
+        <article class="booking-item">
+          <div>
+            <h3>Property Name</h3>
+            <input type="text" th:field="*{name}" required class="form-control">
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Location</h3>
+            <input type="text" th:field="*{location}" required class="form-control">
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Price per Night ($)</h3>
+            <input type="number" step="0.01" th:field="*{pricePerNight}" required class="form-control">
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Maximum Guests</h3>
+            <input type="number" min="1" th:field="*{maxGuests}" required class="form-control">
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Property Type</h3>
+            <select th:field="*{propertyType}" class="form-control" required>
+              <option value="APARTMENT">Apartment</option>
+              <option value="HOUSE">House</option>
+              <option value="VILLA">Villa</option>
+              <option value="CABIN">Cabin</option>
+            </select>
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Description</h3>
+            <textarea th:field="*{description}"
+                      rows="4"
+                      class="form-control"
+                      style="width: 100%; font-family: inherit; resize: vertical;"></textarea>
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Amenities & Rules</h3>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" th:field="*{breakfastIncluded}" style="transform: scale(1.2);">
+                <span>Breakfast Included</span>
+              </label>
+
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" th:field="*{allowsPets}" style="transform: scale(1.2);">
+                <span>Allow Pets</span>
+              </label>
+
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" th:field="*{parkingSpace}" style="transform: scale(1.2);">
+                <span>Parking Space Available</span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+        <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+          <button class="btn btn-primary" type="submit">Save changes</button>
+          <a th:href="@{/host/properties/{id}(id=${property.id})}"
+             class="btn btn-primary"
+             style="text-decoration:none;">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,8 +45,8 @@ public class BookingController {
     }
 
     @PostMapping("/booking-details")
-    public String submitBooking(@ModelAttribute BookingForm bookingForm) {
-        bookingService.createBooking(bookingForm);
+    public String submitBooking(@ModelAttribute BookingForm bookingForm, Authentication authentication) {
+        bookingService.createBooking(bookingForm, authentication.getName());
         return "redirect:/payment/" + bookingForm.getPropertyId();
     }
 
@@ -64,14 +65,14 @@ public class BookingController {
     }
 
     @GetMapping("/guest-bookings")
-    public String guestBookings(Model model) {
-        model.addAttribute("bookings", bookingService.getAllBookings());
+    public String guestBookings(Model model, Authentication authentication) {
+        model.addAttribute("bookings", bookingService.getBookingsForUser(authentication.getName()));
         return "guest-bookings";
     }
 
     @GetMapping("/host-properties")
-    public String hostProperties(Model model) {
-        model.addAttribute("properties", propertyService.getAllProperties());
+    public String hostProperties(Model model, Authentication authentication) {
+        model.addAttribute("properties", propertyService.getPropertiesForHost(authentication.getName()));
         return "host-properties";
     }
 }

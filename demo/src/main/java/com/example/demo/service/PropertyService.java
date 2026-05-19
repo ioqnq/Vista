@@ -1,26 +1,30 @@
 package com.example.demo.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import com.example.demo.domain.Property;
-import com.example.demo.repository.PropertyRepository;
-
-import org.springframework.web.multipart.MultipartFile;
-import com.example.demo.dto.PropertyForm;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.domain.Property;
+import com.example.demo.domain.PropertyImage;
+import com.example.demo.dto.PropertyForm;
+import com.example.demo.repository.PropertyImageRepository;
+import com.example.demo.repository.PropertyRepository;
 
 @Service
 public class PropertyService {
 
     private final PropertyRepository propertyRepository;
+    private final PropertyImageRepository propertyImageRepository;
 
-    public PropertyService(PropertyRepository propertyRepository) {
+    public PropertyService(PropertyRepository propertyRepository,
+                           PropertyImageRepository propertyImageRepository) {
         this.propertyRepository = propertyRepository;
+        this.propertyImageRepository = propertyImageRepository;
     }
 
     public List<Property> getAllProperties() {
@@ -42,19 +46,27 @@ public class PropertyService {
         return propertyRepository.findByHostEmail(hostEmail);
     }
 
+    public Property save(Property property) {
+        return propertyRepository.save(property);
+    }
+
     public void saveProperty(PropertyForm form, List<MultipartFile> images, String hostEmail) {
-        List<String> uploadedUrls = new ArrayList<>();
         String uploadDir = System.getProperty("user.dir") + "/uploads/";
 
-        // save images to local folder
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdirs();
         }
 
+        if (images == null || images.isEmpty()) {
+            throw new RuntimeException("At least one image is required");
+        }
+
+        List<String> uploadedUrls = new ArrayList<>();
+
         for (MultipartFile image : images) {
             if (!image.isEmpty()) {
-                String uniqueFilename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+                String uniqueFilename = UUID.randomUUID() + "_" + image.getOriginalFilename();
                 try {
                     image.transferTo(new File(uploadDir + uniqueFilename));
                     uploadedUrls.add("/uploads/" + uniqueFilename);
@@ -62,6 +74,10 @@ public class PropertyService {
                     throw new RuntimeException("Failed to save image", e);
                 }
             }
+        }
+
+        if (uploadedUrls.isEmpty()) {
+            throw new RuntimeException("At least one valid image is required");
         }
 
         Property property = new Property();
@@ -75,13 +91,18 @@ public class PropertyService {
         property.setAllowsPets(form.isAllowsPets());
         property.setParkingSpace(form.isParkingSpace());
         property.setHostEmail(hostEmail);
-
         property.setRating(0.0);
 
-        if (!uploadedUrls.isEmpty()) {
-            property.setImageUrl(uploadedUrls.get(0));
-        }
+        
+        property.setImageUrl(uploadedUrls.get(0));
 
-        propertyRepository.save(property);
+        Property savedProperty = propertyRepository.save(property);
+
+        for (String imageUrl : uploadedUrls) {
+            PropertyImage propertyImage = new PropertyImage();
+            propertyImage.setImageUrl(imageUrl);
+            propertyImage.setProperty(savedProperty);
+            propertyImageRepository.save(propertyImage);
+        }
     }
 }

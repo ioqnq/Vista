@@ -94,7 +94,7 @@
         <article class="property-card" th:each="property : ${properties}">
           <a class="fav-btn" href="#">❤</a>
 
-          <img th:src="${property.imageUrl}" alt="Property image">
+          <img th:src="@{${property.imageUrl}}" alt="Property image">
 
           <div class="property-body">
             <h3 th:text="${property.name}">Property name</h3>

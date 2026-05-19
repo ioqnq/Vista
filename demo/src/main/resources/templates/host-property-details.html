@@ -11,56 +11,103 @@
 <div th:replace="~{fragments/header :: topbar}"></div>
 
 <main class="page-shell">
-  <section class="details-layout">
-    <div class="details-main">
-      <img class="details-hero" th:src="${property.imageUrl}" alt="Property image">
+  <section class="host-page">
 
-      <div class="details-card">
-        <h1 th:text="${property.name}">Property</h1>
-        <p class="muted-text" th:text="${property.location}">Rome</p>
-        <p class="rating-line">★ <span th:text="${property.rating}">4.8</span></p>
-        <p class="details-description" th:text="${property.description}">Description</p>
-      </div>
+    <div class="host-details-top">
+      <h1 th:text="${property.name}">Property</h1>
 
-      <div class="details-card">
-        <h3>Booked dates</h3>
-        <p>Here you will later display all bookings for this property.</p>
+      <div class="host-top-actions">
+        <a th:href="@{/host/properties/edit/{id}(id=${property.id})}" class="btn btn-primary">Edit property</a>
+        <a th:href="@{/properties}" class="btn btn-primary">Back to properties</a>
       </div>
     </div>
 
-    <aside class="booking-summary-card">
-      <h3>Property summary</h3>
+    <div class="host-details-layout">
 
-      <div class="summary-row">
-        <span>Price</span>
-        <span th:text="'$' + ${property.pricePerNight} + ' / night'">$500 / night</span>
+      <div>
+        <img class="host-hero" th:src="@{${property.imageUrl}}" alt="Property image">
+
+        <div class="host-gallery" th:if="${property.images != null and !#lists.isEmpty(property.images)}">
+          <img th:each="img : ${property.images}"
+               th:src="@{${img.imageUrl}}"
+               alt="Property image">
+        </div>
+
+        <div class="host-info-card">
+          <p class="muted-text" th:text="${property.location}">Rome</p>
+          <p class="rating-line">★ <span th:text="${property.rating}">4.8</span></p>
+          <p th:text="${property.description}">Description</p>
+        </div>
+
+        <div class="host-bookings-card">
+          <h3>Booked dates</h3>
+
+          <div th:if="${bookings == null or #lists.isEmpty(bookings)}">
+            <p>No bookings yet for this property.</p>
+          </div>
+
+          <div th:if="${bookings != null and !#lists.isEmpty(bookings)}">
+            <div class="booking-entry" th:each="booking : ${bookings}">
+              <p>
+                <strong th:text="${booking.guestFirstName + ' ' + booking.guestLastName}">John Doe</strong>
+              </p>
+              <p>
+                <strong>Period:</strong>
+                <span th:text="${booking.checkIn}">12 Sept</span>
+                -
+                <span th:text="${booking.checkOut}">17 Sept</span>
+              </p>
+              <p>
+                <strong>Guests:</strong>
+                <span th:text="${booking.guests}">2</span>
+              </p>
+              <p>
+                <strong>Email:</strong>
+                <span th:text="${booking.email}">guest@example.com</span>
+              </p>
+              <p>
+                <strong>Status:</strong>
+                <span th:text="${booking.status}">Pending</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="summary-row">
-        <span>Max guests</span>
-        <span th:text="${property.maxGuests}">4</span>
-      </div>
+      <aside class="host-summary-card">
+        <h3 class="host-summary-title">Property summary</h3>
 
-      <div class="summary-row">
-        <span>Type</span>
-        <span th:text="${property.propertyType}">Villa</span>
-      </div>
+        <div class="summary-row">
+          <span>Price</span>
+          <span th:text="'$' + ${property.pricePerNight} + ' / night'">$500 / night</span>
+        </div>
 
-      <div class="summary-row">
-        <span>Breakfast</span>
-        <span th:text="${property.breakfastIncluded ? 'Included' : 'Not included'}">Included</span>
-      </div>
+        <div class="summary-row">
+          <span>Max guests</span>
+          <span th:text="${property.maxGuests}">4</span>
+        </div>
 
-      <div class="summary-row">
-        <span>Pets</span>
-        <span th:text="${property.allowsPets ? 'Allowed' : 'Not allowed'}">Allowed</span>
-      </div>
+        <div class="summary-row">
+          <span>Type</span>
+          <span th:text="${property.propertyType}">Villa</span>
+        </div>
 
-      <div class="summary-row">
-        <span>Parking</span>
-        <span th:text="${property.parkingSpace ? 'Yes' : 'No'}">Yes</span>
-      </div>
-    </aside>
+        <div class="summary-row">
+          <span>Breakfast</span>
+          <span th:text="${property.breakfastIncluded ? 'Included' : 'Not included'}">Included</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Pets</span>
+          <span th:text="${property.allowsPets ? 'Allowed' : 'Not allowed'}">Allowed</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Parking</span>
+          <span th:text="${property.parkingSpace ? 'Yes' : 'No'}">Yes</span>
+        </div>
+      </aside>
+    </div>
   </section>
 </main>
 

@@ -32,7 +32,8 @@ public class BookingService {
         return bookingRepository.findByEmail(email);
     }
 
-    public Booking createBooking(BookingForm form) {
+
+    public Booking createBooking(BookingForm form, String loggedInUserEmail) {
         Property property = propertyService.getPropertyById(form.getPropertyId());
 
         if (property == null) {
@@ -46,7 +47,7 @@ public class BookingService {
         booking.setPropertyName(property.getName());
         booking.setGuestFirstName(form.getFirstName());
         booking.setGuestLastName(form.getLastName());
-        booking.setEmail(form.getEmail());
+        booking.setEmail(loggedInUserEmail);
         booking.setPhone(form.getPhone());
         booking.setCheckIn(form.getCheckIn());
         booking.setCheckOut(form.getCheckOut());
@@ -56,4 +57,5 @@ public class BookingService {
 
         return bookingRepository.save(booking);
     }
+
 }
