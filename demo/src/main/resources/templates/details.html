@@ -5,68 +5,150 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vista - Details</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <link rel="stylesheet" th:href="@{/details.css}">
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: topbar}"></div>
 
 <main class="page-shell">
-  <section class="details-layout">
-    <div class="details-main">
-      <img class="details-hero" th:src="${property.imageUrl}" alt="Property image">
 
-      <div class="details-card">
-        <h1 th:text="${property.name}">Authentic Villa Romana</h1>
-        <p class="muted-text" th:text="${property.location}">Rome, Italy</p>
-        <p class="rating-line">★ <span th:text="${property.rating}">4.8</span></p>
-        <p class="details-description" th:text="${property.description}">
-          Property description
-        </p>
-
-        <div class="detail-tags">
-          <span class="detail-chip">Wi-Fi</span>
-          <span class="detail-chip">Parking</span>
-          <span class="detail-chip">Breakfast included</span>
-          <span class="detail-chip">Near attractions</span>
-        </div>
+  <section class="search-panel">
+    <form th:action="@{/results}" method="get" class="search-grid">
+      <div class="field-group">
+        <label for="location">Location</label>
+        <input id="location" name="location" type="text" placeholder="Rome, Center">
       </div>
+      <div class="field-group">
+        <label for="date">Date</label>
+        <input id="date" type="text" value="12-17 Sept.">
+      </div>
+      <div class="field-group">
+        <label for="people">People</label>
+        <input id="people" type="text" value="4 adults">
+      </div>
+      <div class="field-group button-wrap">
+        <label>&nbsp;</label>
+        <button class="btn btn-primary" type="submit">Search</button>
+      </div>
+    </form>
+  </section>
 
-      <div class="details-card">
-        <h3>Reviews</h3>
+  <section class="property-hero">
 
-        <div class="review-card">
-          <strong>Anna</strong>
-          <p>Beautiful place, great location and very clean.</p>
-        </div>
+    <div class="image-gallery">
+      <img class="main-image" th:src="${property.imageUrl}" alt="Main property image">
 
-        <div class="review-card">
-          <strong>David</strong>
-          <p>Spacious villa and very good facilities for families.</p>
+      <div class="side-images">
+        <img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a4?auto=format&fit=crop&w=400&q=80" alt="Interior">
+        <div class="more-photos">
+          <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=400&q=80" alt="Interior">
+          <div class="overlay">+ 10 photos</div>
         </div>
       </div>
     </div>
 
-    <aside class="booking-summary-card">
-      <h3>Booking summary</h3>
-      <p class="big-price" th:text="'$' + ${property.pricePerNight} + ' / night'">$500 / night</p>
+    <div class="property-info">
+      <h1 th:text="${property.name}">Authentic Villa Romana</h1>
+      <div><span class="detail-chip">Breakfast included</span></div>
 
-      <div class="summary-row">
-        <span>Check-in</span>
-        <span>12 Sept</span>
-      </div>
-      <div class="summary-row">
-        <span>Check-out</span>
-        <span>17 Sept</span>
-      </div>
-      <div class="summary-row">
-        <span>Guests</span>
-        <span>4 adults</span>
+      <div class="price-row">
+        <span class="big-price" th:text="'$' + ${property.pricePerNight}">$500</span>
+        <span class="per-night">per night</span>
       </div>
 
-      <a th:href="@{/booking-details/{id}(id=${property.id})}" class="btn btn-primary full-btn">Book now</a>
-    </aside>
+      <div class="form-row">
+        <div class="input-col">
+          <label>Label</label>
+          <select><option>Value</option></select>
+        </div>
+        <div class="input-col">
+          <label>Label</label>
+          <select><option>Value</option></select>
+        </div>
+      </div>
+
+      <a th:href="@{/booking-details/{id}(id=${property.id})}" class="btn btn-primary full-btn">Reserve</a>
+    </div>
   </section>
+
+  <section class="details-card">
+    <h3>Description</h3>
+
+    <div class="description-container">
+      <p class="details-description" th:text="${property.description}">
+      </p>
+    </div>
+
+    <button class="see-more-btn">See more</button>
+  </section>
+
+  <section class="details-card">
+    <h3>Latest reviews</h3>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">☆☆☆☆☆</div>
+        <h4>Review title</h4>
+        <p>Beautiful place, great location and very clean.</p>
+        <div class="reviewer-info">
+          <img src="https://i.pravatar.cc/150?img=1" alt="Reviewer">
+          <div class="reviewer-details">
+            <strong>Reviewer name</strong>
+            <span class="review-date">Date</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">☆☆☆☆☆</div>
+        <h4>Review title</h4>
+        <p>Spacious villa and very good facilities for families.</p>
+        <div class="reviewer-info">
+          <img src="https://i.pravatar.cc/150?img=2" alt="Reviewer">
+          <div class="reviewer-details">
+            <strong>Reviewer name</strong>
+            <span class="review-date">Date</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">☆☆☆☆☆</div>
+        <h4>Review title</h4>
+        <p>Incredible host and seamless check-in process.</p>
+        <div class="reviewer-info">
+          <img src="https://i.pravatar.cc/150?img=3" alt="Reviewer">
+          <div class="reviewer-details">
+            <strong>Reviewer name</strong>
+            <span class="review-date">Date</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const container = document.querySelector('.description-container');
+    const btn = document.querySelector('.see-more-btn');
+
+    if (container && btn) {
+      btn.addEventListener('click', function() {
+        // toggle the expanded class on the container
+        container.classList.toggle('expanded');
+
+        // change the button text based on the state
+        if (container.classList.contains('expanded')) {
+          btn.textContent = 'See less';
+        } else {
+          btn.textContent = 'See more';
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>
