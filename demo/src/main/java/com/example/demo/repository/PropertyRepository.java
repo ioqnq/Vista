@@ -20,7 +20,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query("SELECT p FROM Property p WHERE " +
             "(:location IS NULL OR LOWER(p.location) LIKE LOWER(CONCAT('%', :location, '%'))) AND " +
             "(:maxPrice IS NULL OR p.pricePerNight <= :maxPrice) AND " +
-            "(:minGuests IS NULL OR p.maxGuests >= :minGuests) AND " +
+            "(:minGuests IS NULL OR p.maxGuests <= :minGuests) AND " +
             "(p.propertyType IN :propertyTypes) AND " +
             "(:allowsPets IS NULL OR p.allowsPets = true) AND " +
             "(:smokingArea IS NULL OR p.smokingArea = true) AND " +
