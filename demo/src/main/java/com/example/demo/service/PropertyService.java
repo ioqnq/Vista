@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,10 +39,10 @@ public class PropertyService {
         return propertyRepository.findByLocationContainingIgnoreCase(location);
     }
 
-    // --- THE FIX: This method now accepts and passes all 10 arguments! ---
     public List<Property> getFilteredProperties(String location, Double maxPrice, Integer minGuests,
                                                 List<String> propertyTypes, Boolean allowsPets, Boolean smokingArea,
-                                                Boolean breakfast, Boolean parking, Boolean restaurant, Boolean frontDesk) {
+                                                Boolean breakfast, Boolean parking, Boolean restaurant, Boolean frontDesk,
+                                                String sortType) {
 
         // If the user submits an empty string for location, we turn it into null
         if (location != null && location.isBlank()) {
@@ -53,8 +54,20 @@ public class PropertyService {
             propertyTypes = List.of("VILLA", "HOTEL_ROOM", "APARTMENT", "HOUSE", "CABIN");
         }
 
+        // --- Sorting Logic ---
+        Sort sort;
+        if ("priceAsc".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.ASC, "pricePerNight");
+        } else if ("priceDesc".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.DESC, "pricePerNight");
+        } else if ("ratingDesc".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.DESC, "rating");
+        } else {
+            sort = Sort.by(Sort.Direction.DESC, "id"); // Default "New" (highest ID first)
+        }
+
         return propertyRepository.findWithFilters(location, maxPrice, minGuests, propertyTypes,
-                allowsPets, smokingArea, breakfast, parking, restaurant, frontDesk);
+                allowsPets, smokingArea, breakfast, parking, restaurant, frontDesk, sort);
     }
 
     public Property getPropertyById(Long id) {
@@ -112,8 +125,6 @@ public class PropertyService {
         property.setAllowsPets(form.isAllowsPets());
         property.setParkingSpace(form.isParkingSpace());
 
-        // The new booleans default to false when a host creates a property
-        // (until you decide to add them to your PropertyForm later!)
         property.setSmokingArea(false);
         property.setRestaurant(false);
         property.setFrontDesk(false);

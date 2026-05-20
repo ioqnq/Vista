@@ -36,12 +36,12 @@ public class HomeController {
             @RequestParam(required = false) Boolean parkingSpace,
             @RequestParam(required = false) Boolean restaurant,
             @RequestParam(required = false) Boolean frontDesk,
+            @RequestParam(required = false) String sort, // <-- NEW
             Model model) {
 
-        // Passing all 10 arguments directly to your updated Service!
         model.addAttribute("properties", propertyService.getFilteredProperties(
                 location, maxPrice, minGuests, propertyTypes, allowsPets,
-                smokingArea, breakfastIncluded, parkingSpace, restaurant, frontDesk));
+                smokingArea, breakfastIncluded, parkingSpace, restaurant, frontDesk, sort));
 
         return "results";
     }

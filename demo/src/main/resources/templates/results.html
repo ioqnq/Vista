@@ -85,10 +85,19 @@
           <button class="btn btn-primary btn-map" type="button">Show on map</button>
 
           <div class="sort-group">
-            <button class="chip active" type="button">New</button>
-            <button class="chip" type="button">Price ascending</button>
-            <button class="chip" type="button">Price descending</button>
-            <button class="chip" type="button">Rating</button>
+            <input type="hidden" name="sort" id="sortInput" th:value="${param.sort != null ? param.sort : 'newest'}">
+
+            <button type="button" class="chip" th:classappend="${param.sort == null or param.sort[0] == 'newest' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='newest'; this.form.submit();">New</button>
+
+            <button type="button" class="chip" th:classappend="${param.sort != null and param.sort[0] == 'priceAsc' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='priceAsc'; this.form.submit();">Price ascending</button>
+
+            <button type="button" class="chip" th:classappend="${param.sort != null and param.sort[0] == 'priceDesc' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='priceDesc'; this.form.submit();">Price descending</button>
+
+            <button type="button" class="chip" th:classappend="${param.sort != null and param.sort[0] == 'ratingDesc' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='ratingDesc'; this.form.submit();">Rating</button>
           </div>
         </div>
 
