@@ -101,6 +101,9 @@ a { color: inherit; text-decoration: none; }
     border: 1px solid #567d2f;
     height: 32px;
     padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-chip {
@@ -148,7 +151,7 @@ a { color: inherit; text-decoration: none; }
     display: flex;
     flex-direction: column;
     gap: 8px;
-    flex: 1 1 200px; /* Allows fields to grow/shrink, wraps below 200px */
+    flex: 1 1 80px; /* Allows fields to grow/shrink, wraps below 200px */
 }
 
 .field-group label {
@@ -166,6 +169,12 @@ a { color: inherit; text-decoration: none; }
     font-size: 15px;
     background: #fff;
     width: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .button-wrap {

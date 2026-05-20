@@ -30,6 +30,8 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    private String profileImageUrl;
+
     public User() {
     }
 
@@ -74,6 +76,10 @@ public class User {
         return role;
     }
 
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -96,5 +102,9 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

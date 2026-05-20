@@ -16,20 +16,33 @@
       <h2>My profile</h2>
     </div>
 
-    <div class="booking-list">
-      <article class="booking-item">
-        <div>
-          <h3>First name</h3>
-          <p class="muted-text" th:text="${user.firstName}">Corina</p>
-        </div>
-      </article>
+    <div style="display: flex; justify-content: flex-start; margin-bottom: 30px;">
+      <div style="position: relative;">
+        <img th:src="${user?.profileImageUrl != null ? user.profileImageUrl : '/assets/defaultpfp.png'}"
+             alt="Profile Avatar"
+             style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); box-shadow: var(--shadow);">
+      </div>
+    </div>
 
-      <article class="booking-item">
-        <div>
-          <h3>Last name</h3>
-          <p class="muted-text" th:text="${user.lastName}">Mihon</p>
-        </div>
-      </article>
+    <div class="booking-list" style="display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="display: flex; flex-direction: row; gap: 40px; flex-wrap: wrap; width: 100%;">
+
+        <article class="booking-item" style="width: 160px;">
+          <div>
+            <h3>First name</h3>
+            <p class="muted-text" th:text="${user.firstName}">Corina</p>
+          </div>
+        </article>
+
+        <article class="booking-item" style="width: 160px;">
+          <div>
+            <h3>Last name</h3>
+            <p class="muted-text" th:text="${user.lastName}">Mihon</p>
+          </div>
+        </article>
+
+      </div>
 
       <article class="booking-item">
         <div>
@@ -46,10 +59,16 @@
       </article>
     </div>
 
-    <div style="margin-top: 20px;">
-      <form th:action="@{/logout}" method="post">
+    <div style="margin-top: 30px; display: flex; align-items: center; gap: 12px;">
+
+      <form th:action="@{/logout}" method="post" style="margin: 0;">
         <button class="btn btn-primary" type="submit">Logout</button>
       </form>
+
+      <a th:href="@{/profile/edit}" class="btn btn-primary">
+        Edit Profile
+      </a>
+
     </div>
   </section>
 </main>

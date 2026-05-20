@@ -12,6 +12,7 @@ import com.example.demo.domain.BookingForm;
 import com.example.demo.domain.Property;
 import com.example.demo.service.BookingService;
 import com.example.demo.service.PropertyService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BookingController {
@@ -45,8 +46,14 @@ public class BookingController {
     }
 
     @PostMapping("/booking-details")
-    public String submitBooking(@ModelAttribute BookingForm bookingForm, Authentication authentication) {
+    public String submitBooking(@ModelAttribute BookingForm bookingForm,
+                                Authentication authentication,
+                                RedirectAttributes redirectAttributes) {
+
         bookingService.createBooking(bookingForm, authentication.getName());
+
+        redirectAttributes.addFlashAttribute("bookingForm", bookingForm);
+
         return "redirect:/payment/" + bookingForm.getPropertyId();
     }
 
@@ -61,7 +68,18 @@ public class BookingController {
         model.addAttribute("property", property);
         model.addAttribute("total", property.getPricePerNight() * 5);
 
+        if (!model.containsAttribute("bookingForm")) {
+            BookingForm fallbackForm = new BookingForm();
+            fallbackForm.setPropertyId(propertyId);
+            model.addAttribute("bookingForm", fallbackForm);
+        }
+
         return "payment";
+    }
+
+    @GetMapping("/payment-success")
+    public String paymentSuccessPage() {
+        return "payment-success";
     }
 
     @GetMapping("/guest-bookings")

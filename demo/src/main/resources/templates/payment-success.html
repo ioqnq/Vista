@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <meta http-equiv="refresh" content="12;url=/guest-bookings" />-->
+    <title>Vista - Payment Confirmed</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+    <section class="list-card" style="text-align: center; padding: 40px 20px;">
+
+        <div style="margin-bottom: 24px;">
+            <svg width="80px" height="80px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#E8F5E9"/>
+                <path d="M9 12L11 14L15 10" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <div class="section-head" style="justify-content: center; border-bottom: none; margin-bottom: 10px;">
+            <h2>Payment Confirmed!</h2>
+        </div>
+
+        <p class="muted-text" style="font-size: 1.1rem; margin-bottom: 30px;">
+            Your booking has been successfully placed. Your host has been notified!
+        </p>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <a th:href="@{/guest-bookings}"
+               class="btn btn-primary"
+               style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; height: 45px; padding: 0 20px;">
+                Go to My Bookings
+            </a>
+        </div>
+
+    </section>
+</main>
+
+</body>
+</html>

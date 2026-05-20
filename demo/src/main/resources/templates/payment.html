@@ -11,72 +11,212 @@
 <div th:replace="~{fragments/header :: topbar}"></div>
 
 <main class="page-shell">
-  <section class="form-layout">
-    <div class="form-card">
-      <h2>Payment</h2>
+  <nav class="step-nav" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; font-size: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+    <span style="border: none; padding: 0; background: none; color: var(--muted);">Your Selection</span>
+    <span style="border: none; padding: 0; background: none; color: var(--muted);">Details</span>
+    <span class="active-step" style="font-weight: 700; border-bottom: 2px solid var(--text); padding-bottom: 10px; margin-bottom: -11px;">Payment</span>
+  </nav>
 
-      <div class="payment-options">
-        <label class="payment-option">
-          <input type="radio" name="paymentMethod" checked>
-          <span>Credit card</span>
-        </label>
+  <div class="booking-layout-grid" style="display: grid; grid-template-columns: 350px 1fr; gap: 40px; align-items: start;">
 
-        <label class="payment-option">
-          <input type="radio" name="paymentMethod">
-          <span>PayPal</span>
-        </label>
+    <div class="left-column" style="display: flex; flex-direction: column; gap: 24px;">
+      <div class="property-image-container" style="border-radius: var(--radius); height: 280px; overflow: hidden; box-shadow: var(--shadow);">
+        <img th:src="${property.imageUrl != null ? property.imageUrl : '/assets/default-property.jpg'}"
+             alt="Property view"
+             style="width: 100%; height: 100%; object-fit: cover;">
       </div>
 
-      <div class="form-grid">
-        <div class="field-group">
-          <label>Card holder name</label>
-          <input type="text" placeholder="Corina Popescu">
+      <aside class="host-summary-card" style="background: var(--card); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); text-align: center; border: 1px solid var(--border);">
+        <h2 th:text="${property.name}" style="margin: 0 0 10px 0; font-size: 24px;">Title</h2>
+        <div class="price" style="font-size: 36px; font-weight: 700; margin-bottom: 20px;">
+          <span th:text="'$' + ${total}">$500</span>
         </div>
 
-        <div class="field-group">
-          <label>Card number</label>
-          <input type="text" placeholder="1234 5678 9012 3456">
-        </div>
-
-        <div class="field-group">
-          <label>Expiry date</label>
-          <input type="text" placeholder="MM/YY">
-        </div>
-
-        <div class="field-group">
-          <label>CVV</label>
-          <input type="text" placeholder="123">
-        </div>
-      </div>
-
-      <a th:href="@{/guest-bookings}" class="btn btn-primary full-btn">Pay now</a>
+        <ul style="list-style-type: disc; padding-left: 20px; text-align: left; color: var(--muted); font-size: 14px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 0;">
+          <li>Dates: <span th:text="${bookingForm.checkIn} + ' - ' + ${bookingForm.checkOut}" style="color: var(--text); font-weight: 600;">12 Sept - 17 Sept 2026</span></li>
+          <li>Guests: <span th:text="${bookingForm.guests}" style="color: var(--text); font-weight: 600;">4</span></li>
+          <li>Rooms: <span style="color: var(--text); font-weight: 600;">1</span></li>
+        </ul>
+      </aside>
     </div>
 
-    <aside class="booking-summary-card">
-      <h3>Payment summary</h3>
+    <div class="right-column-card" style="background: var(--card); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+      <form id="paymentForm" th:action="@{/payment-success}" th:object="${bookingForm}" method="get" style="display: flex; flex-direction: column; gap: 24px;">
+        <input type="hidden" th:field="*{propertyId}">
 
-      <div class="summary-row">
-        <span>Property</span>
-        <span th:text="${property.name}">Authentic Villa Romana</span>
-      </div>
+        <div class="payment-methods" style="display: flex; gap: 16px;">
+          <label class="pay-tab" id="visaTab" style="flex: 1; border: 2px solid var(--green); border-radius: 12px; padding: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #fff; transition: all 0.2s ease;">
+            <input type="radio" name="paymentMethod" value="visa" checked style="display: none;">
+            <strong style="color: #1A1F71; font-size: 20px; font-style: italic; user-select: none;">VISA</strong>
+          </label>
 
-      <div class="summary-row">
-        <span>Location</span>
-        <span th:text="${property.location}">Rome</span>
-      </div>
+          <label class="pay-tab" id="gpayTab" style="flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; transition: all 0.2s ease;">
+            <input type="radio" name="paymentMethod" value="gpay" style="display: none;">
+            <span style="font-weight: 600; color: #5F6368; user-select: none;"><span style="color:#4285F4">G</span><span style="color:#EA4335">P</span><span style="color:#FBBC05">a</span><span style="color:#34A853">y</span></span>
+          </label>
 
-      <div class="summary-row">
-        <span>Price per night</span>
-        <span th:text="'$' + ${property.pricePerNight}">$500</span>
-      </div>
+          <label class="pay-tab" id="paypalTab" style="flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; transition: all 0.2s ease;">
+            <input type="radio" name="paymentMethod" value="paypal" style="display: none;">
+            <span style="font-weight: 700; color: #003087; font-style: italic; user-select: none;">PayPal</span>
+          </label>
+        </div>
 
-      <div class="summary-row">
-        <span>Total</span>
-        <strong th:text="'$' + ${total}">$2500</strong>
-      </div>
-    </aside>
-  </section>
+        <div id="creditCardFields" style="display: flex; flex-direction: column; gap: 24px;">
+          <div class="field-group" style="display: flex; flex-direction: column; gap: 4px;">
+            <label style="font-weight: 600; font-size: 14px;">Cardholder's Name</label>
+            <input type="text" id="cardName" placeholder="Name" style="height: 46px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px; width: 100%;">
+            <span class="error-msg" id="nameError" style="color: #e53935; font-size: 12px; display: none; margin-top: 4px;">Please enter cardholder name.</span>
+          </div>
+
+          <div class="field-group" style="display: flex; flex-direction: column; gap: 4px;">
+            <label style="font-weight: 600; font-size: 14px;">Card Number</label>
+            <input type="text" id="cardNumber" maxlength="19" placeholder="Value" style="height: 46px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px; width: 100%;">
+            <span class="error-msg" id="cardError" style="color: #e53935; font-size: 12px; display: none; margin-top: 4px;">Enter a valid 16 digit number.</span>
+          </div>
+
+          <div style="display: flex; gap: 16px; width: 100%;">
+            <div class="field-group" style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-weight: 600; font-size: 14px;">Expiry Date</label>
+              <input type="text" id="cardExpiry" maxlength="5" placeholder="MM/YY" style="height: 46px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px; width: 100%; text-align: center;">
+              <span class="error-msg" id="expiryError" style="color: #e53935; font-size: 12px; display: none; margin-top: 4px;">Invalid date.</span>
+            </div>
+
+            <div class="field-group" style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-weight: 600; font-size: 14px;">CVC</label>
+              <input type="text" id="cardCvc" maxlength="3" placeholder="Value" style="height: 46px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px; width: 100%; text-align: center;">
+              <span class="error-msg" id="cvcError" style="color: #e53935; font-size: 12px; display: none; margin-top: 4px;">Must be 3 digits.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <input type="checkbox" id="termsBox" style="margin-top: 4px; width: 16px; height: 16px; accent-color: var(--green);">
+            <label for="termsBox" style="font-size: 13px; line-height: 1.4;">
+              I have read and agree to the <a href="#" style="text-decoration: underline; font-weight: 600;">Terms and Conditions</a>.
+            </label>
+          </div>
+          <span class="error-msg" id="termsError" style="color: #e53935; font-size: 12px; display: none; margin-top: 4px;">You must accept the terms.</span>
+        </div>
+
+        <button type="submit" class="btn" style="background: var(--green); color: #ffffff; width: 100%; height: 48px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; border: none; margin-top: 10px;">Submit</button>
+
+        <input type="hidden" th:field="*{firstName}">
+        <input type="hidden" th:field="*{lastName}">
+        <input type="hidden" th:field="*{email}">
+        <input type="hidden" th:field="*{phone}">
+        <input type="hidden" th:field="*{checkIn}">
+        <input type="hidden" th:field="*{checkOut}">
+        <input type="hidden" th:field="*{guests}">
+      </form>
+    </div>
+
+  </div>
 </main>
+
+<script>
+  const paymentForm = document.getElementById('paymentForm');
+  const cardNumber = document.getElementById('cardNumber');
+  const cardExpiry = document.getElementById('cardExpiry');
+  const cardCvc = document.getElementById('cardCvc');
+  const cardName = document.getElementById('cardName');
+  const termsBox = document.getElementById('termsBox');
+  const creditCardFields = document.getElementById('creditCardFields');
+
+  document.querySelectorAll('.pay-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.pay-tab').forEach(t => {
+        t.style.border = "1px solid var(--border)";
+        t.style.background = "#fafafa";
+      });
+
+      this.style.border = "2px solid var(--green)";
+      this.style.background = "#ffffff";
+
+      const radioInput = this.querySelector('input[type="radio"]');
+      if (radioInput) {
+        radioInput.checked = true;
+
+        const inputs = creditCardFields.querySelectorAll('input');
+        if (radioInput.value === 'visa') {
+          creditCardFields.style.opacity = '1';
+          creditCardFields.style.pointerEvents = 'auto';
+          inputs.forEach(input => input.removeAttribute('disabled'));
+        } else {
+          creditCardFields.style.opacity = '0.5';
+          creditCardFields.style.pointerEvents = 'none';
+          inputs.forEach(input => input.setAttribute('disabled', 'true'));
+        }
+      }
+    });
+  });
+
+  cardNumber.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    let matches = value.match(/\d{4,16}/g);
+    let match = (matches && matches[0]) || '';
+    let parts = [];
+
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+
+    e.target.value = parts.length > 0 ? parts.join(' ') : value;
+  });
+
+  cardExpiry.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/[^0-9]/g, '');
+    if (value.length >= 2) {
+      e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+    } else {
+      e.target.value = value;
+    }
+  });
+
+  cardCvc.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+  });
+
+  paymentForm.addEventListener('submit', (e) => {
+    let isValid = true;
+    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+    document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+
+    if (selectedMethod === 'visa') {
+      if (cardName.value.trim().length < 2) {
+        document.getElementById('nameError').style.display = 'block';
+        isValid = false;
+      }
+
+      if (cardNumber.value.replace(/\s/g, '').length !== 16) {
+        document.getElementById('cardError').style.display = 'block';
+        isValid = false;
+      }
+
+      const expiryRegex = /^(0[1-12]|1[0-2])\/([0-9]{2})$/;
+      if (!expiryRegex.test(cardExpiry.value)) {
+        document.getElementById('expiryError').style.display = 'block';
+        isValid = false;
+      }
+
+      if (cardCvc.value.length !== 3) {
+        document.getElementById('cvcError').style.display = 'block';
+        isValid = false;
+      }
+    }
+
+    // Always validate terms and conditions checkbox
+    if (!termsBox.checked) {
+      document.getElementById('termsError').style.display = 'block';
+      isValid = false;
+    }
+
+    if (!isValid) {
+      e.preventDefault();
+    }
+  });
+</script>
 
 </body>
 </html>
