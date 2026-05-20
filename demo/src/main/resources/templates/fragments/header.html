@@ -42,8 +42,12 @@
     <a th:href="@{/login}" class="mini-pill" sec:authorize="isAnonymous()">Login</a>
 
     <a th:href="@{/profile}" class="user-chip" sec:authorize="isAuthenticated()">
-      <img th:src="@{/assets/defaultpfp.png}" alt="avatar" />
-      <span th:text="${#strings.substringBefore(#authentication.name, '@')}">User</span>
+<!--      <img th:src="@{/assets/defaultpfp.png}" alt="avatar" />-->
+      <img th:src="${user?.profileImageUrl != null ? user.profileImageUrl : '/assets/defaultpfp.png'}"
+           alt="Profile Picture"
+           style="width:60px; height:60px; border-radius:50%;">
+
+      <span th:text="${user?.firstName != null ? user.firstName : 'User'}">User</span>
     </a>
 
     <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="margin: 0;">

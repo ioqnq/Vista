@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.domain.RegisterForm;
 import com.example.demo.domain.User;
 import com.example.demo.service.UserService;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 public class AuthController {
@@ -49,5 +55,60 @@ public class AuthController {
         User user = userService.findByEmail(email);
         model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("/profile/edit")
+    public String showEditProfilePage(Authentication authentication, Model model) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findByEmail(authentication.getName());
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", user);
+        return "edit-profile";
+    }
+
+    @PostMapping("/profile/edit")
+    public String processProfileUpdate(
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+            Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+
+        User user = userService.findByEmail(authentication.getName());
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String uploadDir = System.getProperty("user.dir") + "/uploads/profiles/";
+            File folder = new File(uploadDir);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + profileImage.getOriginalFilename();
+            try {
+                profileImage.transferTo(new File(uploadDir + uniqueFilename));
+
+                user.setProfileImageUrl("/uploads/profiles/" + uniqueFilename);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to upload profile picture", e);
+            }
+        }
+
+        userService.save(user);
+
+        return "redirect:/profile";
     }
 }

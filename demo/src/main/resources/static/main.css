@@ -101,6 +101,9 @@ a { color: inherit; text-decoration: none; }
     border: 1px solid #567d2f;
     height: 32px;
     padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-chip {

@@ -46,10 +46,16 @@
       </article>
     </div>
 
-    <div style="margin-top: 20px;">
-      <form th:action="@{/logout}" method="post">
+    <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+
+      <form th:action="@{/logout}" method="post" style="margin: 0;">
         <button class="btn btn-primary" type="submit">Logout</button>
       </form>
+
+      <a th:href="@{/profile/edit}" class="btn btn-primary">
+        Edit Profile
+      </a>
+
     </div>
   </section>
 </main>

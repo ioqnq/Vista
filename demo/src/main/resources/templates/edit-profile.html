@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista - Edit Profile</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+    <section class="list-card">
+        <div class="section-head">
+            <h2>Edit Profile</h2>
+        </div>
+
+        <form th:action="@{/profile/edit}" method="post" enctype="multipart/form-data" class="booking-list">
+
+            <article class="booking-item">
+                <div>
+                    <h3>First Name</h3>
+                    <input type="text" name="firstName" th:value="${user.firstName}" required class="form-control" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Last Name</h3>
+                    <input type="text" name="lastName" th:value="${user.lastName}" required class="form-control" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+            </article>
+
+            <article class="booking-item">
+                <div>
+                    <h3>Profile Picture</h3>
+                    <p class="muted-text" style="margin-bottom: 8px;">Choose a new photo to update your avatar image.</p>
+                    <input type="file" name="profileImage" accept="image/*" class="form-control-file">
+                </div>
+            </article>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                <button class="btn btn-primary" type="submit">Save Changes</button>
+                <a th:href="@{/profile}" class="muted-text" style="align-self: center; text-decoration: none;">Cancel</a>
+            </div>
+
+        </form>
+    </section>
+</main>
+
+</body>
+</html>
