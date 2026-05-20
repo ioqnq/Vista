@@ -1,12 +1,16 @@
 package com.example.demo.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 @Entity
 @Table(name = "properties")
 public class Property {
@@ -50,6 +54,22 @@ public class Property {
 
     @Column(nullable = false)
     private String hostEmail;
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyImage> images = new ArrayList<>();
+
+    public List<PropertyImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PropertyImage> images) {
+        this.images = images;
+    }
+
+    public void addImage(PropertyImage image) {
+        images.add(image);
+        image.setProperty(this);
+    }
 
     public Property() {
     }
@@ -104,6 +124,7 @@ public class Property {
     public boolean isParkingSpace() { return parkingSpace; }
     public String getDescription() { return description; }
     public String getHostEmail() { return hostEmail; }
+
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }

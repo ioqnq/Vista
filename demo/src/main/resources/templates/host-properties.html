@@ -11,24 +11,26 @@
 <div th:replace="~{fragments/header :: topbar}"></div>
 
 <main class="page-shell">
-  <section class="list-card">
-    <div class="section-head">
-      <h2>My properties</h2>
-      <a th:href="@{/properties/add}" class="btn btn-primary" style="text-decoration: none; display: inline-block;">Add property</a>
-    </div>
+  <section class="host-page">
+    <div class="host-list-card">
+      <div class="host-section-head">
+        <h2>My properties</h2>
+        <a th:href="@{/properties/add}" class="btn btn-primary">Add property</a>
+      </div>
 
-    <div class="list-grid">
-      <article class="host-card" th:each="property : ${properties}">
-        <img th:src="${property.imageUrl}" alt="Property image">
+      <div class="host-grid">
+        <article class="host-card" th:each="property : ${properties}">
+          <img th:src="@{${property.imageUrl}}" alt="Property image">
 
-        <div class="host-card-body">
-          <h3 th:text="${property.name}">Property name</h3>
-          <p th:text="${property.location}">Rome</p>
-          <p th:text="'$' + ${property.pricePerNight} + ' / night'">$500/night</p>
+          <div class="host-card-body">
+            <h3 th:text="${property.name}">Property name</h3>
+            <p th:text="${property.location}">Rome</p>
+            <p class="host-price" th:text="'$' + ${property.pricePerNight} + ' / night'">$500/night</p>
 
-          <a th:href="@{/host/properties/{id}(id=${property.id})}" class="btn btn-small btn-primary">View details</a>
-        </div>
-      </article>
+            <a th:href="@{/host/properties/{id}(id=${property.id})}" class="btn btn-small btn-primary">View details</a>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 </main>

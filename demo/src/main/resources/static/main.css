@@ -382,3 +382,174 @@ a { color: inherit; text-decoration: none; }
 .muted {
     color: var(--muted);
 }
+
+
+.host-page {
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.host-list-card {
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    padding: 30px;
+}
+
+.host-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.host-section-head h2,
+.host-details-top h1 {
+    margin: 0;
+}
+
+.host-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+}
+
+.host-card {
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+
+.host-card img,
+.host-hero {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.host-card img {
+    height: 250px;
+}
+
+.host-card-body {
+    padding: 22px;
+}
+
+.host-card-body h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+}
+
+.host-card-body p {
+    margin: 0 0 10px 0;
+}
+
+.host-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+}
+
+.host-details-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.host-top-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.host-details-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.host-hero {
+    max-height: 520px;
+    border-radius: 24px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+
+.host-gallery {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.host-gallery img {
+    width: 150px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.host-info-card,
+.host-summary-card,
+.host-bookings-card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.host-info-card,
+.host-bookings-card {
+    margin-top: 24px;
+}
+
+.host-info-card p,
+.host-bookings-card p {
+    line-height: 1.7;
+}
+
+.host-summary-title,
+.host-bookings-card h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+.booking-entry {
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    padding: 16px;
+    background: #fafafa;
+    margin-bottom: 14px;
+}
+
+.booking-entry:last-child {
+    margin-bottom: 0;
+}
+
+.booking-entry p {
+    margin: 0 0 6px 0;
+}
+
+.booking-entry p:last-child {
+    margin-bottom: 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 960px) {
+    .host-details-layout {
+        grid-template-columns: 1fr;
+    }
+}
