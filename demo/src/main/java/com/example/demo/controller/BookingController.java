@@ -64,6 +64,11 @@ public class BookingController {
         return "payment";
     }
 
+    @GetMapping("/payment-success")
+    public String paymentSuccessPage() {
+        return "payment-success";
+    }
+
     @GetMapping("/guest-bookings")
     public String guestBookings(Model model, Authentication authentication) {
         model.addAttribute("bookings", bookingService.getBookingsForUser(authentication.getName()));

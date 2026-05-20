@@ -49,7 +49,10 @@
         </div>
       </div>
 
-      <a th:href="@{/guest-bookings}" class="btn btn-primary full-btn">Pay now</a>
+<!--      <a th:href="@{/guest-bookings}" class="btn btn-primary full-btn">Pay now</a>-->
+      <form th:action="@{/payment-success}" method="get">
+        <button class="btn btn-primary" type="submit">Confirm and Pay</button>
+      </form>
     </div>
 
     <aside class="booking-summary-card">
