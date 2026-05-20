@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List; // Added this import for propertyTypes!
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +25,24 @@ public class HomeController {
     }
 
     @GetMapping("/results")
-    public String results(@RequestParam(required = false) String location, Model model) {
-        model.addAttribute("properties", propertyService.searchProperties(location));
+    public String results(
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer minGuests,
+            @RequestParam(required = false) List<String> propertyTypes,
+            @RequestParam(required = false) Boolean allowsPets,
+            @RequestParam(required = false) Boolean smokingArea,
+            @RequestParam(required = false) Boolean breakfastIncluded,
+            @RequestParam(required = false) Boolean parkingSpace,
+            @RequestParam(required = false) Boolean restaurant,
+            @RequestParam(required = false) Boolean frontDesk,
+            @RequestParam(required = false) String sort, // <-- NEW
+            Model model) {
+
+        model.addAttribute("properties", propertyService.getFilteredProperties(
+                location, maxPrice, minGuests, propertyTypes, allowsPets,
+                smokingArea, breakfastIncluded, parkingSpace, restaurant, frontDesk, sort));
+
         return "results";
     }
 }

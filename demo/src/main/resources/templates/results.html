@@ -11,121 +11,151 @@
 <div th:replace="~{fragments/header :: topbar}"></div>
 
 <main class="page-shell">
-  <section class="search-panel">
-    <form th:action="@{/results}" method="get" class="search-grid">
-      <div class="field-group">
-        <label for="location">Location</label>
-        <input id="location" name="location" type="text" placeholder="Rome, Center">
-      </div>
+  <form th:action="@{/results}" method="get" id="filterForm">
 
-      <div class="field-group">
-        <label for="date">Date</label>
-        <input id="date" type="text" value="12-17 Sept.">
-      </div>
-
-      <div class="field-group">
-        <label for="people">People</label>
-        <input id="people" type="text" value="4 adults">
-      </div>
-
-      <div class="field-group button-wrap">
-        <label>&nbsp;</label>
-        <button class="btn btn-primary" type="submit">Search</button>
-      </div>
-    </form>
-  </section>
-
-  <section class="results-layout">
-    <aside class="filters">
-      <h3>Filters</h3>
-
-      <div class="filter-section">
-        <label class="check"><input type="checkbox" checked> Allows pets</label>
-        <label class="check"><input type="checkbox" checked> Smoking area</label>
-        <label class="check"><input type="checkbox" checked> Breakfast included</label>
-      </div>
-
-      <div class="filter-section">
-        <h4>Price per night</h4>
-        <div class="range-row">
-          <span>$0</span>
-          <span>$10000</span>
+    <section class="search-panel">
+      <div class="search-grid">
+        <div class="field-group">
+          <label for="location">Location</label>
+          <input id="location" name="location" type="text" placeholder="Rome, Center" th:value="${param.location}">
         </div>
-        <input type="range" min="0" max="10000" value="1500">
-      </div>
 
-      <div class="filter-section">
-        <h4>Maximum capacity</h4>
-        <div class="range-row">
-          <span>1</span>
-          <span>30</span>
+        <div class="field-group">
+          <label for="date">Date</label>
+          <input id="date" type="text" value="12-17 Sept.">
         </div>
-        <input type="range" min="1" max="30" value="8">
-      </div>
 
-      <div class="filter-section">
-        <h4>Property type</h4>
-        <label class="check"><input type="checkbox" checked> Villa</label>
-        <label class="check"><input type="checkbox" checked> Hotel room</label>
-        <label class="check"><input type="checkbox" checked> Apartment</label>
-      </div>
-
-      <div class="filter-section">
-        <h4>Facilities</h4>
-        <label class="check"><input type="checkbox" checked> Parking space</label>
-        <label class="check"><input type="checkbox" checked> Restaurant</label>
-        <label class="check"><input type="checkbox" checked> Front desk</label>
-      </div>
-    </aside>
-
-    <section class="results-content">
-      <div class="toolbar">
-        <button class="btn btn-primary btn-map" type="button">Show on map</button>
-
-        <div class="sort-group">
-          <button class="chip active" type="button">New</button>
-          <button class="chip" type="button">Price ascending</button>
-          <button class="chip" type="button">Price descending</button>
-          <button class="chip" type="button">Rating</button>
+        <div class="field-group">
+          <label for="topPeople">People</label>
+          <input id="topPeople" type="number" min="1" max="30" placeholder="Number of guests" th:value="${param.minGuests != null ? param.minGuests[0] : ''}">
         </div>
-      </div>
 
-      <div class="property-grid">
-        <article class="property-card" th:each="property : ${properties}">
-          <a class="fav-btn" href="#">❤</a>
-
-          <img th:src="@{${property.imageUrl}}" alt="Property image">
-
-          <div class="property-body">
-            <h3 th:text="${property.name}">Property name</h3>
-
-            <p class="muted-text" th:text="${property.location}">Rome</p>
-
-            <div class="meta-row">
-              <span class="rating">
-                ★ <span th:text="${property.rating}">4.8</span>
-              </span>
-            </div>
-
-            <p class="price" th:text="'$' + ${property.pricePerNight}">$200</p>
-
-            <a th:href="@{/details/{id}(id=${property.id})}" class="btn btn-primary btn-small">Details</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="pagination">
-        <span class="muted">← Previous</span>
-        <span class="page current">1</span>
-        <span class="page">2</span>
-        <span class="page">3</span>
-        <span class="page">…</span>
-        <span class="page">5</span>
-        <span class="page">Next →</span>
+        <div class="field-group button-wrap">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
       </div>
     </section>
-  </section>
+
+    <section class="results-layout">
+      <aside class="filters">
+        <h3>Filters</h3>
+
+        <div class="filter-section">
+          <label class="check"><input type="checkbox" name="allowsPets" value="true" th:checked="${param.allowsPets != null}" onchange="this.form.submit()"> Allows pets</label>
+          <label class="check"><input type="checkbox" name="smokingArea" value="true" th:checked="${param.smokingArea != null}" onchange="this.form.submit()"> Smoking area</label>
+          <label class="check"><input type="checkbox" name="breakfastIncluded" value="true" th:checked="${param.breakfastIncluded != null}" onchange="this.form.submit()"> Breakfast included</label>
+        </div>
+
+        <div class="filter-section">
+          <h4>Max Price: <span th:text="'$' + (${param.maxPrice != null ? param.maxPrice[0] : '10000'})"></span></h4>
+          <div class="range-row">
+            <span>$0</span>
+            <span>$10000</span>
+          </div>
+          <input type="range" name="maxPrice" min="0" max="10000" step="50" th:value="${param.maxPrice != null ? param.maxPrice[0] : 10000}" onchange="this.form.submit()">
+        </div>
+
+        <div class="filter-section">
+          <h4>Max Capacity: <span th:text="${param.minGuests != null ? param.minGuests[0] : '30'}"></span></h4>
+          <div class="range-row">
+            <span>1</span>
+            <span>30</span>
+          </div>
+          <input type="range" id="sidebarPeople" name="minGuests" min="1" max="30" th:value="${param.minGuests != null ? param.minGuests[0] : 30}" onchange="this.form.submit()">
+        </div>
+
+        <div class="filter-section">
+          <h4>Property type</h4>
+          <label class="check"><input type="checkbox" name="propertyTypes" value="VILLA" th:checked="${param.propertyTypes != null and #arrays.contains(param.propertyTypes, 'VILLA')}" onchange="this.form.submit()"> Villa</label>
+          <label class="check"><input type="checkbox" name="propertyTypes" value="HOTEL_ROOM" th:checked="${param.propertyTypes != null and #arrays.contains(param.propertyTypes, 'HOTEL_ROOM')}" onchange="this.form.submit()"> Hotel room</label>
+          <label class="check"><input type="checkbox" name="propertyTypes" value="APARTMENT" th:checked="${param.propertyTypes != null and #arrays.contains(param.propertyTypes, 'APARTMENT')}" onchange="this.form.submit()"> Apartment</label>
+        </div>
+
+        <div class="filter-section">
+          <h4>Facilities</h4>
+          <label class="check"><input type="checkbox" name="parkingSpace" value="true" th:checked="${param.parkingSpace != null}" onchange="this.form.submit()"> Parking space</label>
+          <label class="check"><input type="checkbox" name="restaurant" value="true" th:checked="${param.restaurant != null}" onchange="this.form.submit()"> Restaurant</label>
+          <label class="check"><input type="checkbox" name="frontDesk" value="true" th:checked="${param.frontDesk != null}" onchange="this.form.submit()"> Front desk</label>
+        </div>
+      </aside>
+
+      <section class="results-content">
+        <div class="toolbar">
+          <button class="btn btn-primary btn-map" type="button">Show on map</button>
+
+          <div class="sort-group">
+            <input type="hidden" name="sort" id="sortInput" th:value="${param.sort != null ? param.sort : 'newest'}">
+
+            <button type="button" class="chip" th:classappend="${param.sort == null or param.sort[0] == 'newest' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='newest'; this.form.submit();">New</button>
+
+            <button type="button" class="chip" th:classappend="${param.sort != null and param.sort[0] == 'priceAsc' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='priceAsc'; this.form.submit();">Price ascending</button>
+
+            <button type="button" class="chip" th:classappend="${param.sort != null and param.sort[0] == 'priceDesc' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='priceDesc'; this.form.submit();">Price descending</button>
+
+            <button type="button" class="chip" th:classappend="${param.sort != null and param.sort[0] == 'ratingDesc' ? 'active' : ''}"
+                    onclick="document.getElementById('sortInput').value='ratingDesc'; this.form.submit();">Rating</button>
+          </div>
+        </div>
+
+        <div class="property-grid">
+          <article class="property-card" th:each="property : ${properties}">
+            <a class="fav-btn" href="#">❤</a>
+            <img th:src="@{${property.imageUrl}}" alt="Property image">
+            <div class="property-body">
+              <h3 th:text="${property.name}">Property name</h3>
+              <p class="muted-text" th:text="${property.location}">Rome</p>
+              <div class="meta-row">
+                <span class="rating">★ <span th:text="${property.rating}">4.8</span></span>
+              </div>
+              <p class="price" th:text="'$' + ${property.pricePerNight}">$200</p>
+              <a th:href="@{/details/{id}(id=${property.id})}" class="btn btn-primary btn-small">Details</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="pagination">
+          <span class="muted">← Previous</span>
+          <span class="page current">1</span>
+          <span class="page">2</span>
+          <span class="page">3</span>
+          <span class="page">…</span>
+          <span class="page">5</span>
+          <span class="page">Next →</span>
+        </div>
+      </section>
+    </section>
+  </form>
 </main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. Restore scroll position smoothly after auto-submit
+    if (sessionStorage.getItem("scrollPos")) {
+      window.scrollTo(0, sessionStorage.getItem("scrollPos"));
+      sessionStorage.removeItem("scrollPos");
+    }
+
+    // 2. Sync "Top People" input with "Sidebar People" slider
+    const topPeople = document.getElementById("topPeople");
+    const sidebarPeople = document.getElementById("sidebarPeople");
+
+    if (topPeople && sidebarPeople) {
+      topPeople.addEventListener("change", function() {
+        // Update the hidden slider to match the top input
+        sidebarPeople.value = this.value;
+      });
+    }
+  });
+
+  // Save the exact scroll position right before the form submits
+  document.getElementById("filterForm").addEventListener("submit", function() {
+    sessionStorage.setItem("scrollPos", window.scrollY);
+  });
+</script>
 
 </body>
 </html>
