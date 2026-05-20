@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "properties")
 public class Property {
@@ -49,6 +50,16 @@ public class Property {
     @Column(nullable = false)
     private boolean parkingSpace;
 
+    // --- NEW: Added the 3 missing Figma sidebar filters ---
+    @Column(nullable = false)
+    private boolean smokingArea;
+
+    @Column(nullable = false)
+    private boolean restaurant;
+
+    @Column(nullable = false)
+    private boolean frontDesk;
+
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -58,25 +69,13 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyImage> images = new ArrayList<>();
 
-    public List<PropertyImage> getImages() {
-        return images;
-    }
-
-    public void setImages(List<PropertyImage> images) {
-        this.images = images;
-    }
-
-    public void addImage(PropertyImage image) {
-        images.add(image);
-        image.setProperty(this);
-    }
-
     public Property() {
     }
 
     public Property(Long id, String name, String location, double pricePerNight, double rating,
                     String imageUrl, int maxGuests, String propertyType,
                     boolean breakfastIncluded, boolean allowsPets, boolean parkingSpace,
+                    boolean smokingArea, boolean restaurant, boolean frontDesk,
                     String description, String hostEmail) {
         this.id = id;
         this.name = name;
@@ -89,6 +88,9 @@ public class Property {
         this.breakfastIncluded = breakfastIncluded;
         this.allowsPets = allowsPets;
         this.parkingSpace = parkingSpace;
+        this.smokingArea = smokingArea;
+        this.restaurant = restaurant;
+        this.frontDesk = frontDesk;
         this.description = description;
         this.hostEmail = hostEmail;
     }
@@ -96,6 +98,7 @@ public class Property {
     public Property(String name, String location, double pricePerNight, double rating,
                     String imageUrl, int maxGuests, String propertyType,
                     boolean breakfastIncluded, boolean allowsPets, boolean parkingSpace,
+                    boolean smokingArea, boolean restaurant, boolean frontDesk,
                     String description, String hostEmail) {
         this.name = name;
         this.location = location;
@@ -107,10 +110,19 @@ public class Property {
         this.breakfastIncluded = breakfastIncluded;
         this.allowsPets = allowsPets;
         this.parkingSpace = parkingSpace;
+        this.smokingArea = smokingArea;
+        this.restaurant = restaurant;
+        this.frontDesk = frontDesk;
         this.description = description;
         this.hostEmail = hostEmail;
     }
 
+    public void addImage(PropertyImage image) {
+        images.add(image);
+        image.setProperty(this);
+    }
+
+    // --- Getters ---
     public Long getId() { return id; }
     public String getName() { return name; }
     public String getLocation() { return location; }
@@ -122,10 +134,14 @@ public class Property {
     public boolean isBreakfastIncluded() { return breakfastIncluded; }
     public boolean isAllowsPets() { return allowsPets; }
     public boolean isParkingSpace() { return parkingSpace; }
+    public boolean isSmokingArea() { return smokingArea; }
+    public boolean isRestaurant() { return restaurant; }
+    public boolean isFrontDesk() { return frontDesk; }
     public String getDescription() { return description; }
     public String getHostEmail() { return hostEmail; }
+    public List<PropertyImage> getImages() { return images; }
 
-
+    // --- Setters ---
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
     public void setLocation(String location) { this.location = location; }
@@ -137,6 +153,10 @@ public class Property {
     public void setBreakfastIncluded(boolean breakfastIncluded) { this.breakfastIncluded = breakfastIncluded; }
     public void setAllowsPets(boolean allowsPets) { this.allowsPets = allowsPets; }
     public void setParkingSpace(boolean parkingSpace) { this.parkingSpace = parkingSpace; }
+    public void setSmokingArea(boolean smokingArea) { this.smokingArea = smokingArea; }
+    public void setRestaurant(boolean restaurant) { this.restaurant = restaurant; }
+    public void setFrontDesk(boolean frontDesk) { this.frontDesk = frontDesk; }
     public void setDescription(String description) { this.description = description; }
     public void setHostEmail(String hostEmail) { this.hostEmail = hostEmail; }
+    public void setImages(List<PropertyImage> images) { this.images = images; }
 }
