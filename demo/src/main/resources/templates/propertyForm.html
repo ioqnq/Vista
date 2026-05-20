@@ -16,6 +16,10 @@
             <h2>Add a New Property</h2>
         </div>
 
+        <div th:if="${errorMessage}" style="background: #ffebee; color: #c62828; padding: 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 600;">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
         <!-- enctype="multipart/form-data" is required for image uploads !!! -->
         <form th:action="@{/properties/add}" th:object="${propertyForm}" method="post" enctype="multipart/form-data" class="booking-list">
 
@@ -106,6 +110,23 @@
         </form>
     </section>
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fileInput = document.querySelector('input[type="file"]');
+        const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+
+        fileInput.addEventListener('change', function() {
+            for (let i = 0; i < this.files.length; i++) {
+                if (this.files[i].size > maxFileSize) {
+                    alert('The file "' + this.files[i].name + '" is too large. Please select images under 5MB.');
+                    this.value = ''; // Clears the input field instantly
+                    break;
+                }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

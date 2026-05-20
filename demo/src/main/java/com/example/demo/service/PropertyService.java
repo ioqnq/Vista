@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,37 @@ public class PropertyService {
             return propertyRepository.findAll();
         }
         return propertyRepository.findByLocationContainingIgnoreCase(location);
+    }
+
+    public List<Property> getFilteredProperties(String location, Double maxPrice, Integer minGuests,
+                                                List<String> propertyTypes, Boolean allowsPets, Boolean smokingArea,
+                                                Boolean breakfast, Boolean parking, Boolean restaurant, Boolean frontDesk,
+                                                String sortType) {
+
+        // If the user submits an empty string for location, we turn it into null
+        if (location != null && location.isBlank()) {
+            location = null;
+        }
+
+        // If no checkboxes are selected for property types, assume they want to search ALL types
+        if (propertyTypes == null || propertyTypes.isEmpty()) {
+            propertyTypes = List.of("VILLA", "HOTEL_ROOM", "APARTMENT", "HOUSE", "CABIN");
+        }
+
+        // --- Sorting Logic ---
+        Sort sort;
+        if ("priceAsc".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.ASC, "pricePerNight");
+        } else if ("priceDesc".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.DESC, "pricePerNight");
+        } else if ("ratingDesc".equals(sortType)) {
+            sort = Sort.by(Sort.Direction.DESC, "rating");
+        } else {
+            sort = Sort.by(Sort.Direction.DESC, "id"); // Default "New" (highest ID first)
+        }
+
+        return propertyRepository.findWithFilters(location, maxPrice, minGuests, propertyTypes,
+                allowsPets, smokingArea, breakfast, parking, restaurant, frontDesk, sort);
     }
 
     public Property getPropertyById(Long id) {
@@ -87,13 +119,19 @@ public class PropertyService {
         property.setMaxGuests(form.getMaxGuests());
         property.setPropertyType(form.getPropertyType());
         property.setDescription(form.getDescription());
+
+        // Original Booleans
         property.setBreakfastIncluded(form.isBreakfastIncluded());
         property.setAllowsPets(form.isAllowsPets());
         property.setParkingSpace(form.isParkingSpace());
+
+        property.setSmokingArea(false);
+        property.setRestaurant(false);
+        property.setFrontDesk(false);
+
         property.setHostEmail(hostEmail);
         property.setRating(0.0);
 
-        
         property.setImageUrl(uploadedUrls.get(0));
 
         Property savedProperty = propertyRepository.save(property);
