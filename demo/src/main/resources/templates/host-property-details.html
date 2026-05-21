@@ -77,6 +77,15 @@
       <aside class="host-summary-card">
         <h3 class="host-summary-title">Property summary</h3>
 
+        <div class="summary-row" style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+          <span style="font-weight: bold; color: var(--green-dark);">Availability</span>
+          <span th:if="${property.availableFrom != null and property.availableTo != null}"
+                th:text="${property.availableFrom} + ' to ' + ${property.availableTo}"
+                style="font-weight: bold;"></span>
+          <span th:if="${property.availableFrom == null or property.availableTo == null}"
+                class="muted-text">Not set</span>
+        </div>
+
         <div class="summary-row">
           <span>Price</span>
           <span th:text="'$' + ${property.pricePerNight} + ' / night'">$500 / night</span>
@@ -92,20 +101,36 @@
           <span th:text="${property.propertyType}">Villa</span>
         </div>
 
-        <div class="summary-row">
+        <div class="summary-row" th:if="${property.breakfastIncluded}">
           <span>Breakfast</span>
-          <span th:text="${property.breakfastIncluded ? 'Included' : 'Not included'}">Included</span>
+          <span>Included</span>
         </div>
 
-        <div class="summary-row">
+        <div class="summary-row" th:if="${property.allowsPets}">
           <span>Pets</span>
-          <span th:text="${property.allowsPets ? 'Allowed' : 'Not allowed'}">Allowed</span>
+          <span>Allowed</span>
         </div>
 
-        <div class="summary-row">
+        <div class="summary-row" th:if="${property.parkingSpace}">
           <span>Parking</span>
-          <span th:text="${property.parkingSpace ? 'Yes' : 'No'}">Yes</span>
+          <span>Available</span>
         </div>
+
+        <div class="summary-row" th:if="${property.smokingArea}">
+          <span>Smoking Area</span>
+          <span>Available</span>
+        </div>
+
+        <div class="summary-row" th:if="${property.restaurant}">
+          <span>Restaurant</span>
+          <span>Available</span>
+        </div>
+
+        <div class="summary-row" th:if="${property.frontDesk}">
+          <span>Front Desk</span>
+          <span>Available</span>
+        </div>
+
       </aside>
     </div>
   </section>

@@ -28,8 +28,8 @@ public class HostController {
     private final BookingService bookingService;
 
     public HostController(UserService userService,
-                      PropertyService propertyService,
-                      BookingService bookingService) {
+                          PropertyService propertyService,
+                          BookingService bookingService) {
         this.userService = userService;
         this.propertyService = propertyService;
         this.bookingService = bookingService;
@@ -167,6 +167,7 @@ public class HostController {
             return "redirect:/properties";
         }
 
+        // Existing fields
         existingProperty.setName(updatedProperty.getName());
         existingProperty.setLocation(updatedProperty.getLocation());
         existingProperty.setPricePerNight(updatedProperty.getPricePerNight());
@@ -176,6 +177,11 @@ public class HostController {
         existingProperty.setBreakfastIncluded(updatedProperty.isBreakfastIncluded());
         existingProperty.setAllowsPets(updatedProperty.isAllowsPets());
         existingProperty.setParkingSpace(updatedProperty.isParkingSpace());
+        existingProperty.setAvailableFrom(updatedProperty.getAvailableFrom());
+        existingProperty.setAvailableTo(updatedProperty.getAvailableTo());
+        existingProperty.setSmokingArea(updatedProperty.isSmokingArea());
+        existingProperty.setRestaurant(updatedProperty.isRestaurant());
+        existingProperty.setFrontDesk(updatedProperty.isFrontDesk());
 
         propertyService.save(existingProperty);
 
