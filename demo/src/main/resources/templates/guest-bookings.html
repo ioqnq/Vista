@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vista - Guest Bookings</title>
+  <title>Vista - My Bookings</title>
   <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
@@ -11,27 +11,67 @@
 <div th:replace="~{fragments/header :: topbar}"></div>
 
 <main class="page-shell">
-  <section class="list-card">
-    <div class="section-head">
-      <h2>My bookings</h2>
-    </div>
+  <section class="host-page">
+    <div class="host-list-card">
+      <div class="host-section-head">
+        <h2>My bookings</h2>
+      </div>
 
-    <div class="booking-list">
-      <article class="booking-item" th:each="booking : ${bookings}">
-        <div>
-          <h3 th:text="${booking.propertyName}">Booking name</h3>
-          <p class="muted-text">
-            <span th:text="${booking.checkIn}">12 Sept 2026</span>
-            -
-            <span th:text="${booking.checkOut}">17 Sept 2026</span>
-          </p>
-        </div>
+      <div th:if="${bookings == null or #lists.isEmpty(bookings)}" class="booking-empty">
+        You do not have any bookings yet.
+      </div>
 
-        <div class="booking-meta">
-          <span class="status-badge" th:text="${booking.status}">Confirmed</span>
-          <strong th:text="'$' + ${booking.totalPrice}">$2500</strong>
-        </div>
-      </article>
+      <div class="host-grid" th:if="${bookings != null and !#lists.isEmpty(bookings)}">
+        <article class="host-card" th:each="booking : ${bookings}">
+          <img th:if="${booking.property != null}"
+               th:src="@{${booking.property.imageUrl}}"
+               alt="Property image">
+
+          <div class="host-card-body">
+            <div class="booking-status"
+                 th:classappend="${booking.status == 'PAID'} ? 'paid' : (${booking.status == 'PENDING'} ? 'pending' : 'cancelled')"
+                 th:text="${booking.status}">
+              PAID
+            </div>
+
+            <h3 th:text="${booking.propertyName}">Property name</h3>
+
+            <div class="booking-meta">
+              <div>
+                <strong>Dates:</strong>
+                <span th:text="${booking.checkIn}">2026-05-22</span>
+                -
+                <span th:text="${booking.checkOut}">2026-05-26</span>
+              </div>
+
+              <div>
+                <strong>Guests:</strong>
+                <span th:text="${booking.guests}">2</span>
+              </div>
+
+              <div>
+                <strong>Total:</strong>
+                <span th:text="'$' + ${booking.totalPrice}">$400</span>
+              </div>
+            </div>
+
+            <div class="booking-actions">
+              <a th:href="@{/guest-bookings/{id}(id=${booking.id})}"
+                 class="btn btn-small btn-primary">
+                View details
+              </a>
+
+              <form th:action="@{/guest-bookings/{id}/delete(id=${booking.id})}"
+                    method="post"
+                    style="margin:0;">
+                <button type="submit" class="btn btn-small btn-danger">
+                  Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 </main>

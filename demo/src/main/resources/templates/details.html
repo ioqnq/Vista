@@ -72,18 +72,26 @@
         <span class="per-night">per night</span>
       </div>
 
-      <div class="form-row">
-        <div class="input-col">
-          <label for="checkin">Check-in</label>
-          <input type="date" id="checkin" name="checkin" required>
-        </div>
-        <div class="input-col">
-          <label for="checkout">Check-out</label>
-          <input type="date" id="checkout" name="checkout" required>
-        </div>
-      </div>
+      <form th:action="@{/booking-details/{id}(id=${property.id})}" method="get">
+        <div class="form-row">
+          <div class="input-col">
+            <label for="checkIn">Check-in</label>
+            <input type="date" id="checkIn" name="checkIn" required>
+          </div>
 
-      <a th:href="@{/booking-details/{id}(id=${property.id})}" class="btn btn-primary full-btn">Reserve</a>
+          <div class="input-col">
+            <label for="checkOut">Check-out</label>
+            <input type="date" id="checkOut" name="checkOut" required>
+          </div>
+
+          <div class="input-col">
+            <label for="guests">Guests</label>
+            <input type="number" id="guests" name="guests" min="1" th:attr="max=${property.maxGuests}" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-btn">Reserve</button>
+      </form>
     </div>
   </section>
 
@@ -135,8 +143,8 @@
   document.addEventListener("DOMContentLoaded", function() {
 
     // --- 1. Smart Date Pickers ---
-    const checkinInput = document.getElementById('checkin');
-    const checkoutInput = document.getElementById('checkout');
+    const checkinInput = document.getElementById('checkIn');
+    const checkoutInput = document.getElementById('checkOut');
 
     if (checkinInput && checkoutInput) {
       // Get today's date in YYYY-MM-DD format

@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "bookings")
@@ -48,6 +49,9 @@ public class Booking {
     @Column(nullable = false)
     private String status;
 
+    @Transient
+    private Property property;
+
     public Booking() {
     }
 
@@ -81,6 +85,7 @@ public class Booking {
     public int getGuests() { return guests; }
     public double getTotalPrice() { return totalPrice; }
     public String getStatus() { return status; }
+    public Property getProperty() { return property; }
 
     public void setId(Long id) { this.id = id; }
     public void setPropertyId(Long propertyId) { this.propertyId = propertyId; }
@@ -94,4 +99,5 @@ public class Booking {
     public void setGuests(int guests) { this.guests = guests; }
     public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
     public void setStatus(String status) { this.status = status; }
+    public void setProperty(Property property) { this.property = property; }
 }
