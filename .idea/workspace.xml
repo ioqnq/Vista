@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e39d1e49-591d-48d7-8847-3cf614c7cb9f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/repository/PropertyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/repository/PropertyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/service/PropertyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/service/PropertyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/templates/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/static/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.DemoApplication.executor": "Run",
-    "git-widget-placeholder": "payment-improve",
+    "git-widget-placeholder": "css-fix",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Cozon/Documents/GitHub/Vista",
     "list.type.of.created.stylesheet": "CSS",
