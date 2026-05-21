@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vista - Edit Property</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <style>
+    /* Quick styling for the date inputs to match your form */
+    .date-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .date-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .date-col input {
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 14px;
+      font-family: inherit;
+    }
+  </style>
 </head>
 <body>
 
@@ -25,35 +47,35 @@
         <article class="booking-item">
           <div>
             <h3>Property Name</h3>
-            <input type="text" th:field="*{name}" required class="form-control">
+            <input type="text" th:field="*{name}" required class="form-control" style="width: 100%; height: 42px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px;">
           </div>
         </article>
 
         <article class="booking-item">
           <div>
             <h3>Location</h3>
-            <input type="text" th:field="*{location}" required class="form-control">
+            <input type="text" th:field="*{location}" required class="form-control" style="width: 100%; height: 42px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px;">
           </div>
         </article>
 
         <article class="booking-item">
           <div>
             <h3>Price per Night ($)</h3>
-            <input type="number" step="0.01" th:field="*{pricePerNight}" required class="form-control">
+            <input type="number" step="0.01" th:field="*{pricePerNight}" required class="form-control" style="width: 100%; height: 42px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px;">
           </div>
         </article>
 
         <article class="booking-item">
           <div>
             <h3>Maximum Guests</h3>
-            <input type="number" min="1" th:field="*{maxGuests}" required class="form-control">
+            <input type="number" min="1" th:field="*{maxGuests}" required class="form-control" style="width: 100%; height: 42px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px;">
           </div>
         </article>
 
         <article class="booking-item">
           <div>
             <h3>Property Type</h3>
-            <select th:field="*{propertyType}" class="form-control" required>
+            <select th:field="*{propertyType}" class="form-control" required style="width: 100%; height: 42px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px; background: #fff;">
               <option value="APARTMENT">Apartment</option>
               <option value="HOUSE">House</option>
               <option value="VILLA">Villa</option>
@@ -68,7 +90,26 @@
             <textarea th:field="*{description}"
                       rows="4"
                       class="form-control"
-                      style="width: 100%; font-family: inherit; resize: vertical;"></textarea>
+                      style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; resize: vertical;"></textarea>
+          </div>
+        </article>
+
+        <article class="booking-item">
+          <div>
+            <h3>Availability Calendar</h3>
+            <p class="muted-text" style="margin: 4px 0 12px; font-size: 14px;">Set the dates this property is open for bookings.</p>
+
+            <div class="date-row">
+              <div class="date-col">
+                <label for="availableFrom">Available From</label>
+                <input type="date" id="availableFrom" th:field="*{availableFrom}" required>
+              </div>
+
+              <div class="date-col">
+                <label for="availableTo">Available To</label>
+                <input type="date" id="availableTo" th:field="*{availableTo}" required>
+              </div>
+            </div>
           </div>
         </article>
 
@@ -99,12 +140,35 @@
           <button class="btn btn-primary" type="submit">Save changes</button>
           <a th:href="@{/host/properties/{id}(id=${property.id})}"
              class="btn btn-primary"
-             style="text-decoration:none;">Cancel</a>
+             style="text-decoration:none; background: #fff; color: var(--green); border: 1px solid var(--green);">Cancel</a>
         </div>
       </form>
     </div>
   </section>
 </main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fromInput = document.getElementById('availableFrom');
+    const toInput = document.getElementById('availableTo');
+
+    if (fromInput && toInput) {
+      // When the 'From' date changes, update the minimum 'To' date
+      fromInput.addEventListener('change', function() {
+        const fromDate = new Date(this.value);
+
+        // Ensure "To" date is always at least the same day or later
+        const minToDate = fromDate.toISOString().split('T')[0];
+        toInput.setAttribute('min', minToDate);
+
+        // If they had a previous 'To' date that is now invalid, clear it
+        if (toInput.value && toInput.value < this.value) {
+          toInput.value = '';
+        }
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
