@@ -35,14 +35,13 @@
   </div>
 
   <div class="nav-right">
-    <a th:href="@{/guest-bookings}" class="mini-pill">Bookings</a>
+    <a th:href="@{/guest-bookings}" class="mini-pill" sec:authorize="hasAnyAuthority('GUEST', 'ROLE_GUEST')">Bookings</a>
 
-    <a th:href="@{/properties}" class="mini-pill">Properties</a>
+    <a th:href="@{/properties}" class="mini-pill" sec:authorize="hasAnyAuthority('HOST', 'ROLE_HOST')">Properties</a>
 
     <a th:href="@{/login}" class="mini-pill" sec:authorize="isAnonymous()">Login</a>
 
     <a th:href="@{/profile}" class="user-chip" sec:authorize="isAuthenticated()">
-<!--      <img th:src="@{/assets/defaultpfp.png}" alt="avatar" />-->
       <img th:src="${user?.profileImageUrl != null ? user.profileImageUrl : '/assets/defaultpfp.png'}"
            alt="Profile Picture"
            style="width:60px; height:60px; border-radius:50%;">
