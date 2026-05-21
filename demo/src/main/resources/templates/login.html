@@ -12,11 +12,11 @@
 
 <main class="page-shell">
   <section class="form-layout">
-    <div class="form-card">
-      <h2>Login</h2>
+    <div class="form-card" style="max-width: 500px; margin: 0 auto;">
+      <h2 style="margin-bottom: 24px;">Login</h2>
 
       <form th:action="@{/login}" method="post">
-        <div class="form-grid">
+        <div class="form-grid" style="display: flex; flex-direction: column; gap: 16px;">
           <div class="field-group">
             <label>Email</label>
             <input type="email" name="username" placeholder="Enter your email" required>
@@ -28,20 +28,20 @@
           </div>
         </div>
 
-        <div th:if="${param.error}" class="error-text">
+        <div th:if="${param.error}" class="error-text" style="margin-top: 16px; color: #d93025; font-size: 14px;">
           Invalid email or password.
         </div>
 
-        <div th:if="${param.logout}" class="success-text">
+        <div th:if="${param.logout}" class="success-text" style="margin-top: 16px; color: var(--green-dark); font-size: 14px;">
           You have been logged out.
         </div>
 
-        <button class="btn btn-primary full-btn" type="submit">Login</button>
+        <button class="btn btn-primary" type="submit" style="margin-top: 24px;">Login</button>
       </form>
 
-      <p class="muted-text" style="margin-top: 16px;">
+      <p class="muted-text" style="margin-top: 32px; font-size: 15px;">
         Don’t have an account?
-        <a th:href="@{/register}">Register here</a>
+        <a th:href="@{/register}" style="color: var(--green-dark); font-weight: 700; text-decoration: underline;">Register here</a>
       </p>
     </div>
   </section>
