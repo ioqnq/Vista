@@ -25,7 +25,7 @@
       </div>
       <div class="field-group">
         <label for="people">People</label>
-        <input id="people" type="text" value="4 adults">
+        <input id="people" type="number" min="1" max="30" placeholder="Number of guests">
       </div>
       <div class="field-group button-wrap">
         <label>&nbsp;</label>
@@ -37,20 +37,35 @@
   <section class="property-hero">
 
     <div class="image-gallery">
-      <img class="main-image" th:src="${property.imageUrl}" alt="Main property image">
+      <img class="main-image" th:src="@{${property.imageUrl}}" alt="Main property image">
 
-      <div class="side-images">
-        <img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a4?auto=format&fit=crop&w=400&q=80" alt="Interior">
-        <div class="more-photos">
-          <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=400&q=80" alt="Interior">
-          <div class="overlay">+ 10 photos</div>
+      <div class="side-images" th:if="${property.images != null and property.images.size() > 1}">
+
+        <img th:src="@{${property.images[1].imageUrl}}" alt="Interior">
+
+        <div class="more-photos" th:if="${property.images.size() > 2}">
+          <img th:src="@{${property.images[2].imageUrl}}" alt="Interior">
+          <div class="overlay" th:if="${property.images.size() > 3}" th:text="'+ ' + ${property.images.size() - 3} + ' photos'">+ photos</div>
         </div>
       </div>
     </div>
 
     <div class="property-info">
-      <h1 th:text="${property.name}">Authentic Villa Romana</h1>
-      <div><span class="detail-chip">Breakfast included</span></div>
+      <h1 th:text="${property.name}">Property Name</h1>
+
+      <p class="muted-text" th:text="${property.location}">Location</p>
+
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
+        <span class="detail-chip" th:text="${property.propertyType}">Type</span>
+        <span class="detail-chip" th:text="'Max Guests: ' + ${property.maxGuests}">Guests</span>
+
+        <span class="detail-chip" th:if="${property.breakfastIncluded}">Breakfast included</span>
+        <span class="detail-chip" th:if="${property.allowsPets}">Pets allowed</span>
+        <span class="detail-chip" th:if="${property.parkingSpace}">Parking</span>
+        <span class="detail-chip" th:if="${property.smokingArea}">Smoking Area</span>
+        <span class="detail-chip" th:if="${property.restaurant}">Restaurant</span>
+        <span class="detail-chip" th:if="${property.frontDesk}">Front Desk</span>
+      </div>
 
       <div class="price-row">
         <span class="big-price" th:text="'$' + ${property.pricePerNight}">$500</span>
@@ -59,12 +74,12 @@
 
       <div class="form-row">
         <div class="input-col">
-          <label>Label</label>
-          <select><option>Value</option></select>
+          <label for="checkin">Check-in</label>
+          <input type="date" id="checkin" name="checkin" required>
         </div>
         <div class="input-col">
-          <label>Label</label>
-          <select><option>Value</option></select>
+          <label for="checkout">Check-out</label>
+          <input type="date" id="checkout" name="checkout" required>
         </div>
       </div>
 
@@ -99,26 +114,12 @@
           </div>
         </div>
       </div>
-
       <div class="review-card">
         <div class="review-stars">☆☆☆☆☆</div>
         <h4>Review title</h4>
-        <p>Spacious villa and very good facilities for families.</p>
+        <p>Beautiful place, great location and very clean.</p>
         <div class="reviewer-info">
           <img src="https://i.pravatar.cc/150?img=2" alt="Reviewer">
-          <div class="reviewer-details">
-            <strong>Reviewer name</strong>
-            <span class="review-date">Date</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">☆☆☆☆☆</div>
-        <h4>Review title</h4>
-        <p>Incredible host and seamless check-in process.</p>
-        <div class="reviewer-info">
-          <img src="https://i.pravatar.cc/150?img=3" alt="Reviewer">
           <div class="reviewer-details">
             <strong>Reviewer name</strong>
             <span class="review-date">Date</span>
@@ -132,15 +133,44 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+
+    // --- 1. Smart Date Pickers ---
+    const checkinInput = document.getElementById('checkin');
+    const checkoutInput = document.getElementById('checkout');
+
+    if (checkinInput && checkoutInput) {
+      // Get today's date in YYYY-MM-DD format
+      const today = new Date().toISOString().split('T')[0];
+
+      // Prevent users from selecting past dates
+      checkinInput.setAttribute('min', today);
+      checkoutInput.setAttribute('min', today);
+
+      // When Check-in changes, update the minimum Check-out date
+      checkinInput.addEventListener('change', function() {
+        // The earliest check-out is the day AFTER check-in
+        const checkinDate = new Date(this.value);
+        checkinDate.setDate(checkinDate.getDate() + 1);
+
+        const nextDay = checkinDate.toISOString().split('T')[0];
+
+        // Force the check-out calendar to start on the next day
+        checkoutInput.setAttribute('min', nextDay);
+
+        // If the user already picked a checkout date that is now invalid, clear it
+        if (checkoutInput.value && checkoutInput.value <= this.value) {
+          checkoutInput.value = '';
+        }
+      });
+    }
+
+    // --- 2. Description "See More" Toggle ---
     const container = document.querySelector('.description-container');
     const btn = document.querySelector('.see-more-btn');
 
     if (container && btn) {
       btn.addEventListener('click', function() {
-        // toggle the expanded class on the container
         container.classList.toggle('expanded');
-
-        // change the button text based on the state
         if (container.classList.contains('expanded')) {
           btn.textContent = 'See less';
         } else {
