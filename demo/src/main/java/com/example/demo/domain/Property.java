@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import java.time.LocalDate; // <-- NEW IMPORT
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,6 @@ public class Property {
     @Column(nullable = false)
     private boolean parkingSpace;
 
-    // --- NEW: Added the 3 missing Figma sidebar filters ---
     @Column(nullable = false)
     private boolean smokingArea;
 
@@ -65,6 +65,10 @@ public class Property {
 
     @Column(nullable = false)
     private String hostEmail;
+
+    // --- NEW: Availability Dates ---
+    private LocalDate availableFrom;
+    private LocalDate availableTo;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyImage> images = new ArrayList<>();
@@ -140,6 +144,8 @@ public class Property {
     public String getDescription() { return description; }
     public String getHostEmail() { return hostEmail; }
     public List<PropertyImage> getImages() { return images; }
+    public LocalDate getAvailableFrom() { return availableFrom; } // NEW
+    public LocalDate getAvailableTo() { return availableTo; }     // NEW
 
     // --- Setters ---
     public void setId(Long id) { this.id = id; }
@@ -159,4 +165,6 @@ public class Property {
     public void setDescription(String description) { this.description = description; }
     public void setHostEmail(String hostEmail) { this.hostEmail = hostEmail; }
     public void setImages(List<PropertyImage> images) { this.images = images; }
+    public void setAvailableFrom(LocalDate availableFrom) { this.availableFrom = availableFrom; } // NEW
+    public void setAvailableTo(LocalDate availableTo) { this.availableTo = availableTo; }         // NEW
 }

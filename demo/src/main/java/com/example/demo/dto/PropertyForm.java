@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import java.time.LocalDate; // <-- NEW IMPORT
+
 public class PropertyForm {
     private String name;
     private String location;
@@ -10,6 +12,10 @@ public class PropertyForm {
     private boolean breakfastIncluded;
     private boolean allowsPets;
     private boolean parkingSpace;
+
+    // --- NEW: Availability Dates ---
+    private LocalDate availableFrom;
+    private LocalDate availableTo;
 
     public String getName() {
         return name;
@@ -81,5 +87,22 @@ public class PropertyForm {
 
     public void setParkingSpace(boolean parkingSpace) {
         this.parkingSpace = parkingSpace;
+    }
+
+    // --- NEW GETTERS & SETTERS ---
+    public LocalDate getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public void setAvailableFrom(LocalDate availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    public LocalDate getAvailableTo() {
+        return availableTo;
+    }
+
+    public void setAvailableTo(LocalDate availableTo) {
+        this.availableTo = availableTo;
     }
 }

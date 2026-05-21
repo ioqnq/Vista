@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vista - Booking Details</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: topbar}"></div>
+
+<main class="page-shell">
+  <section class="host-page">
+
+    <div class="host-details-top">
+      <h1>Booking details</h1>
+
+      <div class="host-top-actions">
+        <a th:href="@{/guest-bookings}" class="btn btn-primary">Back to my bookings</a>
+
+        <form th:action="@{/guest-bookings/{id}/delete(id=${booking.id})}" method="post" style="margin:0;">
+          <button type="submit" class="btn btn-danger">Delete booking</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="host-details-layout">
+
+      <div>
+        <img class="host-hero"
+             th:if="${property != null}"
+             th:src="@{${property.imageUrl}}"
+             alt="Property image">
+
+        <div class="host-info-card">
+          <p class="muted-text" th:text="${property.location}">Location</p>
+          <h2 style="margin-top:0;" th:text="${booking.propertyName}">Property Name</h2>
+          <p th:text="${property.description}">Property description</p>
+        </div>
+
+        <div class="host-bookings-card">
+          <h3>Guest information</h3>
+
+          <div class="booking-entry">
+            <p>
+              <strong>Name:</strong>
+              <span th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}">Guest Name</span>
+            </p>
+            <p>
+              <strong>Email:</strong>
+              <span th:text="${booking.email}">guest@email.com</span>
+            </p>
+            <p>
+              <strong>Phone:</strong>
+              <span th:text="${booking.phone}">0700000000</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="host-summary-card">
+        <h3 class="host-summary-title">Booking summary</h3>
+
+        <div class="summary-row">
+          <span>Status</span>
+          <span class="booking-status"
+                th:classappend="${booking.status == 'PAID'} ? 'paid' : (${booking.status == 'PENDING'} ? 'pending' : 'cancelled')"
+                th:text="${booking.status}">
+            PAID
+          </span>
+        </div>
+
+        <div class="summary-row">
+          <span>Check-in</span>
+          <span th:text="${booking.checkIn}">2026-05-22</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Check-out</span>
+          <span th:text="${booking.checkOut}">2026-05-26</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Guests</span>
+          <span th:text="${booking.guests}">2</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Total</span>
+          <strong th:text="'$' + ${booking.totalPrice}">$400</strong>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
