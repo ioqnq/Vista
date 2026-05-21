@@ -29,13 +29,13 @@
       <aside class="host-summary-card" style="background: var(--card); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); text-align: center; border: 1px solid var(--border);">
         <h2 th:text="${property.name}" style="margin: 0 0 10px 0; font-size: 24px;">Title</h2>
         <div class="price" style="font-size: 36px; font-weight: 700; margin-bottom: 20px;">
-          <span th:text="'$' + ${property.pricePerNight * 5}">$500</span>
+          <span th:text="'$' + ${total}">$500</span>
         </div>
 
         <ul style="list-style-type: disc; padding-left: 20px; text-align: left; color: var(--muted); font-size: 14px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 0;">
           <li>Dates: <span th:text="${bookingForm.checkIn} + ' - ' + ${bookingForm.checkOut}" style="color: var(--text); font-weight: 600;">12 Sept - 17 Sept 2026</span></li>
           <li>Guests: <span th:text="${bookingForm.guests}" style="color: var(--text); font-weight: 600;">4</span></li>
-          <li>Rooms: <span style="color: var(--text); font-weight: 600;">1</span></li>
+          <li>Nights: <span th:text="${nights}" style="color: var(--text); font-weight: 600;">5</span></li>
         </ul>
       </aside>
     </div>

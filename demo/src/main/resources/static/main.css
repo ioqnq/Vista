@@ -562,3 +562,63 @@ a { color: inherit; text-decoration: none; }
         grid-template-columns: 1fr;
     }
 }
+
+.booking-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.booking-status.paid {
+    background: rgba(132, 196, 79, 0.18);
+    color: #4f7f26;
+}
+
+.booking-status.pending {
+    background: rgba(255, 193, 7, 0.18);
+    color: #9a6a00;
+}
+
+.booking-status.cancelled {
+    background: rgba(229, 57, 53, 0.14);
+    color: #b42318;
+}
+
+.booking-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.btn-danger {
+    background: #e53935;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c62828;
+}
+
+.booking-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: #444;
+    font-size: 14px;
+}
+
+.booking-meta strong {
+    color: var(--text);
+}
+
+.booking-empty {
+    color: var(--muted);
+    font-size: 16px;
+    padding: 10px 0;
+}
