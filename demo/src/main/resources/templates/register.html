@@ -12,11 +12,12 @@
 
 <main class="page-shell">
   <section class="form-layout">
-    <div class="form-card">
-      <h2>Create account</h2>
+    <div class="form-card" style="max-width: 500px; margin: 0 auto;">
+      <h2 style="margin-bottom: 24px;">Create account</h2>
 
       <form th:action="@{/register}" th:object="${registerForm}" method="post">
-        <div class="form-grid">
+
+        <div class="form-grid" style="display: flex; flex-direction: column; gap: 16px;">
           <div class="field-group">
             <label>First name</label>
             <input type="text" th:field="*{firstName}" placeholder="First name" required>
@@ -34,7 +35,7 @@
 
           <div class="field-group">
             <label>Role</label>
-            <select th:field="*{role}" required>
+            <select th:field="*{role}" required style="height: 46px; border: 1px solid var(--border); border-radius: 8px; padding: 0 14px; font-family: inherit; font-size: 15px; background: #fff; width: 100%;">
               <option value="">Select role</option>
               <option value="GUEST">Guest</option>
               <option value="HOST">Host</option>
@@ -52,14 +53,14 @@
           </div>
         </div>
 
-        <div th:if="${error}" class="error-text" th:text="${error}"></div>
+        <div th:if="${error}" class="error-text" style="margin-top: 16px; color: #d93025; font-size: 14px;" th:text="${error}"></div>
 
-        <button class="btn btn-primary full-btn" type="submit">Register</button>
+        <button class="btn btn-primary" type="submit" style="margin-top: 24px;">Register</button>
       </form>
 
-      <p class="muted-text" style="margin-top: 16px;">
+      <p class="muted-text" style="margin-top: 32px; font-size: 15px;">
         Already have an account?
-        <a th:href="@{/login}">Login here</a>
+        <a th:href="@{/login}" style="color: var(--green-dark); font-weight: 700; text-decoration: underline;">Login here</a>
       </p>
     </div>
   </section>
