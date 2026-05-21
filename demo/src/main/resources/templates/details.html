@@ -36,11 +36,10 @@
 
   <section class="property-hero">
 
-    <div class="image-gallery">
+    <div class="image-gallery" onclick="openGallery()">
       <img class="main-image" th:src="@{${property.imageUrl}}" alt="Main property image">
 
       <div class="side-images" th:if="${property.images != null and property.images.size() > 1}">
-
         <img th:src="@{${property.images[1].imageUrl}}" alt="Interior">
 
         <div class="more-photos" th:if="${property.images.size() > 2}">
@@ -48,6 +47,11 @@
           <div class="overlay" th:if="${property.images.size() > 3}" th:text="'+ ' + ${property.images.size() - 3} + ' photos'">+ photos</div>
         </div>
       </div>
+    </div>
+
+    <div id="gallery-data" style="display: none;">
+      <span th:if="${property.images == null or property.images.isEmpty()}" th:data-url="@{${property.imageUrl}}"></span>
+      <span th:if="${property.images != null}" th:each="img : ${property.images}" th:data-url="@{${img.imageUrl}}"></span>
     </div>
 
     <div class="property-info">
@@ -139,40 +143,56 @@
 
 </main>
 
+<div id="imageModal" class="gallery-modal">
+  <span class="close-modal" onclick="closeGallery()">&times;</span>
+  <span class="nav-arrow prev" onclick="changeImage(-1)">&#10094;</span>
+  <span class="nav-arrow next" onclick="changeImage(1)">&#10095;</span>
+  <img class="gallery-modal-content" id="expandedImg">
+</div>
+
 <script>
+  // --- GLOBAL GALLERY VARIABLES ---
+  let currentImgIndex = 0;
+  let galleryUrls = [];
+
   document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. Smart Date Pickers ---
+    // 1. EXTRACT IMAGE URLS FOR GALLERY
+    const dataSpans = document.querySelectorAll('#gallery-data span');
+    dataSpans.forEach(span => galleryUrls.push(span.getAttribute('data-url')));
+
+    // Keyboard navigation for the gallery (Left/Right arrows and Escape key)
+    document.addEventListener('keydown', function(e) {
+      const modal = document.getElementById('imageModal');
+      if (modal.style.display === 'block') {
+        if (e.key === 'Escape') closeGallery();
+        if (e.key === 'ArrowRight') changeImage(1);
+        if (e.key === 'ArrowLeft') changeImage(-1);
+      }
+    });
+
+    // --- 2. Smart Date Pickers ---
     const checkinInput = document.getElementById('checkIn');
     const checkoutInput = document.getElementById('checkOut');
 
     if (checkinInput && checkoutInput) {
-      // Get today's date in YYYY-MM-DD format
       const today = new Date().toISOString().split('T')[0];
-
-      // Prevent users from selecting past dates
       checkinInput.setAttribute('min', today);
       checkoutInput.setAttribute('min', today);
 
-      // When Check-in changes, update the minimum Check-out date
       checkinInput.addEventListener('change', function() {
-        // The earliest check-out is the day AFTER check-in
         const checkinDate = new Date(this.value);
         checkinDate.setDate(checkinDate.getDate() + 1);
-
         const nextDay = checkinDate.toISOString().split('T')[0];
-
-        // Force the check-out calendar to start on the next day
         checkoutInput.setAttribute('min', nextDay);
 
-        // If the user already picked a checkout date that is now invalid, clear it
         if (checkoutInput.value && checkoutInput.value <= this.value) {
           checkoutInput.value = '';
         }
       });
     }
 
-    // --- 2. Description "See More" Toggle ---
+    // --- 3. Description "See More" Toggle ---
     const container = document.querySelector('.description-container');
     const btn = document.querySelector('.see-more-btn');
 
@@ -187,6 +207,31 @@
       });
     }
   });
+
+  // --- GALLERY FUNCTIONS ---
+  function openGallery() {
+    if (galleryUrls.length === 0) return; // Failsafe
+    document.getElementById("imageModal").style.display = "block";
+    currentImgIndex = 0; // Always open on the first image
+    showImage(currentImgIndex);
+  }
+
+  function closeGallery() {
+    document.getElementById("imageModal").style.display = "none";
+  }
+
+  function changeImage(step) {
+    currentImgIndex += step;
+    // Loop back to start or end if they click past the limits
+    if (currentImgIndex >= galleryUrls.length) currentImgIndex = 0;
+    if (currentImgIndex < 0) currentImgIndex = galleryUrls.length - 1;
+    showImage(currentImgIndex);
+  }
+
+  function showImage(index) {
+    const modalImg = document.getElementById("expandedImg");
+    modalImg.src = galleryUrls[index];
+  }
 </script>
 </body>
 </html>
